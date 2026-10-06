@@ -1,26 +1,33 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: ['./index.html', './mentions-legales.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       fontFamily: {
-        octosquares: ['"TT Octosquares Trl Cnd"', 'sans-serif'],
-        inter: ['"Inter Tight"', 'sans-serif'],
-        mono: ['"Inter Tight"', 'monospace'],
+        titre: ['"Urbanist Variable"', 'sans-serif'],
+        inter: ['"Inter Variable"', 'sans-serif'],
+        mono: ['"Inter Variable"', 'monospace'],
       },
       colors: {
         landing: {
-          surface: 'rgba(255,255,255,0.10)',
-          'surface-hover': 'rgba(255,255,255,0.16)',
+          surface: 'rgba(255,255,255,0.08)',
+          'surface-hover': 'rgba(255,255,255,0.13)',
         },
         border: 'rgba(255,255,255,0.10)',
-        foreground: 'hsl(0 0% 100%)',
-        background: '#000000',
-        gold: {
-          DEFAULT: '#F3AF42',
-          dark: '#C68C2F',
+        foreground: '#FFFBF3',
+        background: '#0C2100',
+        // Charte de Vert Demain, relevée sur clement-vertdemain.com :
+        // vert sapin #133201, vert citron #BFFF56, crème #FFFBF3.
+        citron: {
+          DEFAULT: '#BFFF56',
+          // Lisible sur crème (6:1) et visible en filet sur le citron.
+          dark: '#3F6B0E',
         },
-        dark: '#080808',
+        sapin: {
+          DEFAULT: '#133201',
+          deep: '#0C2100',
+        },
+        creme: '#FFFBF3',
       },
       keyframes: {
         'accordion-down': {

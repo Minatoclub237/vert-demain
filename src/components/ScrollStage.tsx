@@ -3,15 +3,14 @@ import { ChevronRight } from 'lucide-react';
 import Reveal from '@/components/scroll/Reveal';
 import TexteRevele from '@/components/ui/TexteRevele';
 import ScrollVideo from '@/components/scroll/ScrollVideo';
-import { FAMILLES } from '@/lib/familles';
 import { T, lien } from '@/lib/i18n';
 
-// Ordre d'affichage des quatre familles. Libellés et textes : dictionnaire.
-const ORDRE_SERVICES = ['pavage', 'maconnerie', 'terrassement', 'clotures'] as const;
-const ORDRE_CAPACITES = ['terrassement', 'pavage', 'maconnerie', 'clotures'] as const;
+// Les trois familles de réalisations, puis le contrat annuel (2e bloc ci-dessous).
+// Libellés : dictionnaire.
+const SERVICES_ANCRES = ['#realisations-entretien', '#realisations-taille', '#realisations-creation', '#contrat'];
 
 const SECTION_SHELL =
-  'relative flex flex-col justify-between px-5 sm:px-8 md:px-12 pt-24 sm:pt-28 pb-12 md:pb-16';
+  'relative flex flex-col justify-between gap-10 px-5 sm:px-8 md:px-12 pt-24 sm:pt-28 pb-12 md:pb-16';
 
 const SECTION_HEIGHT = 'min-h-screen supports-[height:100svh]:min-h-[100svh]';
 
@@ -26,7 +25,7 @@ export default function ScrollStage() {
   const rangeRef = useRef<HTMLDivElement>(null);
 
   return (
-      <div id="solutions" ref={rangeRef} className="scroll-stage relative bg-[#0a0a0a] font-inter text-white antialiased">
+      <div id="solutions" ref={rangeRef} className="scroll-stage relative bg-sapin-deep font-inter text-white antialiased">
         <div className="sticky top-0 z-0 h-screen supports-[height:100svh]:h-[100svh]">
           <ScrollVideo />
         </div>
@@ -35,10 +34,10 @@ export default function ScrollStage() {
           <section className={`${SECTION_SHELL} ${SECTION_HEIGHT}`}>
             <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
               <div className="flex flex-col gap-2">
-                {ORDRE_SERVICES.map((slug, i) => (
-                  <Reveal key={slug} delay={150 + i * 120}>
+                {SERVICES_ANCRES.map((ancre, i) => (
+                  <Reveal key={ancre} delay={150 + i * 120}>
                     <a
-                      href={lien(`#realisations-${slug}`)}
+                      href={lien(ancre)}
                       className="font-mono text-xs uppercase tracking-[0.15em] text-white/90 drop-shadow-md transition-colors duration-300 hover:text-white"
                     >
                       {t.stage.services[i]}
@@ -48,7 +47,7 @@ export default function ScrollStage() {
               </div>
 
               <Reveal delay={300} className="max-w-xs sm:text-right">
-                <p className="text-lg leading-relaxed text-white drop-shadow-md sm:text-xl">
+                <p className="text-xl leading-snug text-white drop-shadow-md sm:text-2xl">
                   {t.stage.phrase1}
                 </p>
               </Reveal>
@@ -67,7 +66,7 @@ export default function ScrollStage() {
               <Reveal delay={420}>
                 <div className="flex items-center gap-4 rounded-xl bg-white/15 p-3 backdrop-blur-md">
                   <img
-                    src="/chantier/3.webp"
+                    src="/photos/clement-arrosage-massif.webp"
                     alt=""
                     aria-hidden
                     className="h-24 w-20 rounded-lg object-cover"
@@ -92,7 +91,7 @@ export default function ScrollStage() {
 
           <div aria-hidden className="h-[80vh]" />
 
-          <section className={`${SECTION_SHELL} ${SECTION_HEIGHT}`}>
+          <section id="contrat" className={`${SECTION_SHELL} ${SECTION_HEIGHT} scroll-mt-0`}>
             <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
               <Reveal delay={120}>
                 <span className={BADGE}>{t.stage.badge2}</span>
@@ -112,7 +111,7 @@ export default function ScrollStage() {
                 </Reveal>
 
                 <Reveal delay={320} className="mt-6 max-w-md">
-                  <p className="text-sm leading-relaxed text-white/80 drop-shadow-md sm:text-base">
+                  <p className="text-base leading-relaxed text-white/80 drop-shadow-md">
                     {t.stage.texte2}
                   </p>
                 </Reveal>
@@ -137,35 +136,32 @@ export default function ScrollStage() {
               </div>
 
               <div className="w-full max-w-md rounded-2xl border border-white/15 bg-white/10 px-5 backdrop-blur-md sm:px-6">
-                {ORDRE_CAPACITES.map((slug, i) => {
-                  const f = FAMILLES.find((x) => x.slug === slug)!;
-                  return (
+                {t.stage.saisons.map((s, i) => (
                   <Reveal
-                    key={slug}
+                    key={s.titre}
                     delay={300 + i * 110}
-                    className={i < ORDRE_CAPACITES.length - 1 ? 'border-b border-white/15' : ''}
+                    className={i < t.stage.saisons.length - 1 ? 'border-b border-white/15' : ''}
                   >
-                    <a href={lien(`#realisations-${slug}`)} className="group flex gap-5 py-5">
+                    <a href={lien('#contact')} className="group flex gap-5 py-5">
                       <span className="font-mono text-[11px] tracking-[0.15em] text-white/55">
-                        {f.num}
+                        {s.num}
                       </span>
                       <div>
                         <h3 className="flex items-center gap-1 text-base font-medium text-white sm:text-lg">
-                          {t.realisations.familles[slug].titre.replace('\n', ' ')}
+                          {s.titre}
                           <ChevronRight
                             size={16}
                             className="text-white/40 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-white"
                           />
                         </h3>
-                        <p className="mt-1.5 text-sm leading-relaxed text-white/70">{t.stage.capacites[i]}</p>
-                        <span className="mt-2 inline-block font-mono text-[10px] uppercase tracking-[0.15em] text-white/45 transition-colors duration-300 group-hover:text-gold">
-                          {t.stage.voirLes} {f.photos.length} {t.stage.realisationsMot}
+                        <p className="mt-1.5 text-[15px] leading-relaxed text-white/75">{s.texte}</p>
+                        <span className="mt-2 inline-block font-mono text-[10px] uppercase tracking-[0.15em] text-white/45 transition-colors duration-300 group-hover:text-citron">
+                          {t.stage.voirContrat}
                         </span>
                       </div>
                     </a>
                   </Reveal>
-                  );
-                })}
+                ))}
               </div>
             </div>
           </section>

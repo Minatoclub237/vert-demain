@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { ArrowUpRight, Phone, X, ChevronLeft, ChevronRight } from 'lucide-react';
-import { FAMILLES, cheminPhoto, type FamilleSlug } from '@/lib/familles';
+import { EMPLACEMENTS_VIDES, FAMILLES, cheminPhoto, type FamilleSlug } from '@/lib/familles';
 import { T, lien } from '@/lib/i18n';
 import { useInView } from '@/components/scroll/Reveal';
+import Vide from '@/components/ui/Vide';
 
 export default function Realisations() {
   const t = T();
@@ -147,7 +148,7 @@ export default function Realisations() {
   return (
     <section
       id="realisations"
-      className="relative z-[2] rounded-t-[40px] bg-[#E8E3DD] font-inter shadow-[0_-28px_60px_-18px_rgba(0,0,0,0.35)]"
+      className="relative z-[2] rounded-t-[40px] bg-[#FFFBF3] font-inter shadow-[0_-28px_60px_-18px_rgba(0,0,0,0.35)]"
     >
       {/* La bande des quatre familles, tirée par le défilement vertical. */}
       <div ref={rangeRef} className="relative h-[300vh]">
@@ -157,14 +158,14 @@ export default function Realisations() {
             className="flex w-max items-center gap-6 pl-5 pr-[20vw] sm:gap-10 sm:pl-8 lg:pl-12"
             style={{ willChange: 'transform' }}
           >
-            <header className="w-[80vw] max-w-[42rem] shrink-0">
-              <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-gold-dark sm:text-[13px]">
+            <header className="w-[80vw] max-w-[48rem] shrink-0">
+              <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-citron-dark sm:text-[13px]">
                 {t.realisations.kicker}
               </p>
-              <h2 className="mt-4 font-octosquares text-[clamp(2.6rem,9vw,7rem)] font-bold uppercase leading-[0.9] text-black">
+              <h2 className="mt-4 font-titre text-[clamp(2.4rem,8vw,5.25rem)] font-bold uppercase leading-[0.9] text-sapin">
                 {t.realisations.titre}
               </h2>
-              <p className="mt-6 max-w-[26rem] text-[14px] leading-[1.5] text-black/60 sm:text-[15px]">
+              <p className="mt-6 max-w-[26rem] text-[16px] leading-[1.55] text-sapin/70">
                 {t.realisations.intro}
               </p>
             </header>
@@ -193,24 +194,24 @@ export default function Realisations() {
                       actif ? 'scale-[1.03] grayscale-0' : 'grayscale'
                     }`}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-sapin/80 via-sapin/25 to-transparent" />
 
                   <div className="absolute inset-x-5 bottom-5 sm:inset-x-7 sm:bottom-7">
                     <div className="flex items-end justify-between gap-4">
                       <div>
-                        <span className="text-[13px] font-medium text-gold">{f.num}</span>
+                        <span className="text-[13px] font-medium text-citron">{f.num}</span>
                         <h3 className="mt-1 whitespace-pre-line text-2xl font-semibold leading-[1.1] text-white sm:text-3xl">
                           {tf.titre}
                         </h3>
                         <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.15em] text-white/60">
                           {tf.intro}
                         </p>
-                        <p className="mt-3 max-w-[22rem] text-[13px] leading-[1.55] text-white/80">
+                        <p className="mt-3 max-w-[22rem] text-[15px] leading-[1.55] text-white/85">
                           {tf.resume}
                         </p>
                         <span
-                          className={`mt-4 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[12px] font-medium uppercase tracking-[0.07em] text-black transition-colors group-hover:bg-gold ${
-                            actif ? 'bg-gold' : 'bg-white'
+                          className={`mt-4 inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[12px] font-medium uppercase tracking-[0.07em] text-sapin transition-colors group-hover:bg-citron ${
+                            actif ? 'bg-citron' : 'bg-white'
                           }`}
                         >
                           {t.realisations.voirPhotos.replace('{n}', String(f.photos.length))}
@@ -237,16 +238,16 @@ export default function Realisations() {
           de l'overlay resterait enfermé dans le contexte d'empilement de la section
           (z-2) et la 2e vidéo (z-10) passerait par-dessus. */}
       {famille && txtFamille && createPortal(
-        <div className="fixed inset-0 z-[90] overflow-y-auto overscroll-contain bg-[#E8E3DD]">
-          <div className="sticky top-0 z-10 border-b border-black/10 bg-[#E8E3DD]/95 backdrop-blur-md">
+        <div className="fixed inset-0 z-[90] overflow-y-auto overscroll-contain bg-[#FFFBF3]">
+          <div className="sticky top-0 z-10 border-b border-sapin/10 bg-[#FFFBF3]/95 backdrop-blur-md">
             <div className="mx-auto flex max-w-[1500px] flex-wrap items-center gap-x-6 gap-y-3 px-5 py-4 sm:px-8">
               <div className="min-w-0">
-                <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-gold-dark">
+                <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-citron-dark">
                   {t.realisations.famille} {famille.num}
                 </p>
-                <h3 className="truncate text-xl font-semibold leading-tight text-black sm:text-2xl">
+                <h3 className="truncate text-xl font-semibold leading-tight text-sapin sm:text-2xl">
                   {txtFamille.titre.replace('\n', ' ')}
-                  <span className="ml-2 text-[13px] font-normal text-black/45">
+                  <span className="ml-2 text-[13px] font-normal text-sapin/45">
                     {famille.photos.length} {t.realisations.photos}
                   </span>
                 </h3>
@@ -261,8 +262,8 @@ export default function Realisations() {
                     aria-pressed={f.slug === famille.slug}
                     className={`rounded-full border px-3.5 py-1.5 text-[11px] font-medium transition-colors duration-300 sm:text-[12px] ${
                       f.slug === famille.slug
-                        ? 'border-black bg-black text-white'
-                        : 'border-black/15 bg-white/60 text-black/70 hover:border-black/40 hover:bg-white'
+                        ? 'border-sapin bg-sapin text-white'
+                        : 'border-sapin/15 bg-white/60 text-sapin/70 hover:border-sapin/40 hover:bg-white'
                     }`}
                   >
                     {t.realisations.familles[f.slug].titre.replace('\n', ' ')}
@@ -274,7 +275,7 @@ export default function Realisations() {
                 <a
                   href={lien('#contact')}
                   onClick={fermer}
-                  className="hidden items-center gap-2 rounded-full bg-black px-4 py-2 text-[11px] font-medium uppercase tracking-[0.07em] text-white transition-colors hover:bg-black/80 sm:inline-flex"
+                  className="hidden items-center gap-2 rounded-full bg-sapin px-4 py-2 text-[11px] font-medium uppercase tracking-[0.07em] text-white transition-colors hover:bg-sapin/80 sm:inline-flex"
                 >
                   <Phone size={13} />
                   {t.commun.devisGratuit}
@@ -283,7 +284,7 @@ export default function Realisations() {
                   type="button"
                   onClick={fermer}
                   aria-label={t.realisations.fermerGalerie}
-                  className="rounded-full border border-black/15 bg-white/70 p-2.5 text-black transition-colors hover:bg-white"
+                  className="rounded-full border border-sapin/15 bg-white/70 p-2.5 text-sapin transition-colors hover:bg-white"
                 >
                   <X size={18} />
                 </button>
@@ -295,12 +296,21 @@ export default function Realisations() {
             {famille.photos.map((cle, i) => (
               <Vignette
                 key={cle}
-                src={cheminPhoto(famille.slug, cle)}
+                src={cheminPhoto(cle)}
                 titre={pt[cle].titre}
                 alt={pt[cle].alt}
                 etiquetteAgrandir={t.commun.agrandir}
                 indice={i}
                 onOuvrir={() => setPhoto(i)}
+              />
+            ))}
+            {/* Emplacements vides : photos Instagram / TikTok à venir. */}
+            {Array.from({ length: EMPLACEMENTS_VIDES }, (_, i) => (
+              <Vide
+                key={`vide-${i}`}
+                ton="clair"
+                label={t.commun.photoAVenir}
+                className="aspect-[4/5] rounded-xl"
               />
             ))}
           </div>
@@ -310,7 +320,7 @@ export default function Realisations() {
 
       {famille && photo !== null && createPortal(
         <div
-          className="fixed inset-0 z-[95] flex items-center justify-center bg-black/92 p-4 sm:p-8"
+          className="fixed inset-0 z-[95] flex items-center justify-center bg-sapin-deep/95 p-4 sm:p-8"
           role="dialog"
           aria-modal="true"
           aria-label={pt[famille.photos[photo]].titre}
@@ -334,7 +344,7 @@ export default function Realisations() {
           </button>
           <figure className="max-h-full" onClick={(e) => e.stopPropagation()}>
             <img
-              src={cheminPhoto(famille.slug, famille.photos[photo])}
+              src={cheminPhoto(famille.photos[photo])}
               alt={pt[famille.photos[photo]].alt}
               className="mx-auto max-h-[78vh] w-auto rounded-lg object-contain"
             />
@@ -385,7 +395,7 @@ function Vignette({
       type="button"
       onClick={onOuvrir}
       aria-label={`${etiquetteAgrandir} : ${titre}`}
-      className={`group relative aspect-[4/5] overflow-hidden rounded-xl bg-black/5 transition-[opacity,transform] duration-700 ease-out ${
+      className={`group relative aspect-[4/5] overflow-hidden rounded-xl bg-sapin/5 transition-[opacity,transform] duration-700 ease-out ${
         inView ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'
       }`}
       style={{ transitionDelay: `${(indice % 4) * 70}ms` }}
@@ -399,7 +409,7 @@ function Vignette({
           inView ? 'scale-100' : 'scale-[1.08]'
         }`}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/5 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-95" />
+      <div className="absolute inset-0 bg-gradient-to-t from-sapin/70 via-sapin/5 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-95" />
       <div className="absolute inset-x-3 bottom-3 flex items-end justify-between gap-2">
         <h4 className="text-left text-[13px] font-medium leading-tight text-white sm:text-sm">
           {titre}

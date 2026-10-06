@@ -24,10 +24,10 @@ export default function Features() {
         )}`}
         style={{ animationDelay: '100ms' }}
       >
-        <div className={`absolute -top-0.5 -left-0.5 w-1 h-1 bg-dark ${anim('animate-fade-in')}`} style={{ animationDelay: '500ms' }} />
-        <div className={`absolute -top-0.5 -right-0.5 w-1 h-1 bg-dark ${anim('animate-fade-in')}`} style={{ animationDelay: '600ms' }} />
-        <div className={`absolute -bottom-0.5 -left-0.5 w-1 h-1 bg-dark ${anim('animate-fade-in')}`} style={{ animationDelay: '700ms' }} />
-        <div className={`absolute -bottom-0.5 -right-0.5 w-1 h-1 bg-dark ${anim('animate-fade-in')}`} style={{ animationDelay: '800ms' }} />
+        <div className={`absolute -top-0.5 -left-0.5 w-1 h-1 bg-sapin ${anim('animate-fade-in')}`} style={{ animationDelay: '500ms' }} />
+        <div className={`absolute -top-0.5 -right-0.5 w-1 h-1 bg-sapin ${anim('animate-fade-in')}`} style={{ animationDelay: '600ms' }} />
+        <div className={`absolute -bottom-0.5 -left-0.5 w-1 h-1 bg-sapin ${anim('animate-fade-in')}`} style={{ animationDelay: '700ms' }} />
+        <div className={`absolute -bottom-0.5 -right-0.5 w-1 h-1 bg-sapin ${anim('animate-fade-in')}`} style={{ animationDelay: '800ms' }} />
 
         <div
           className={`border border-dashed border-neutral-200 rounded-sm flex flex-col min-h-[calc(100vh-2rem)] sm:min-h-[calc(100vh-2.5rem)] ${anim(
@@ -38,9 +38,6 @@ export default function Features() {
           <nav className="relative z-30 flex items-center justify-between px-5 sm:px-8 lg:px-12 border-b border-dashed border-neutral-200 min-h-[4rem] sm:min-h-[5.5rem]">
             <div className={`flex items-center gap-2 sm:gap-3 ${anim('animate-fade-up')}`} style={{ animationDelay: '350ms' }}>
               <LogoMark />
-              <span className="font-octosquares font-medium text-lg sm:text-[22px] text-black tracking-tight">
-                VDH Construct
-              </span>
             </div>
 
             <div className="hidden md:flex items-center gap-1">
@@ -48,7 +45,7 @@ export default function Features() {
                 <a
                   key={t.nav[link.cle]}
                   href={lien(link.href)}
-                  className={`px-5 py-2.5 bg-black/5 rounded-sm text-[13px] font-medium uppercase tracking-[0.07em] text-black hover:bg-black/10 transition-colors ${anim(
+                  className={`px-5 py-2.5 bg-sapin/5 rounded-sm text-[13px] font-medium uppercase tracking-[0.07em] text-sapin hover:bg-sapin/10 transition-colors ${anim(
                     'animate-fade-up'
                   )}`}
                   style={{ animationDelay: `${450 + i * 70}ms` }}
@@ -60,7 +57,7 @@ export default function Features() {
 
             <a
               href={lien('#contact')}
-              className={`hidden md:inline-flex px-6 py-3.5 bg-dark rounded-sm text-white text-[13px] font-medium uppercase tracking-[0.07em] hover:bg-black transition-colors ${anim(
+              className={`hidden md:inline-flex px-6 py-3.5 bg-sapin rounded-sm text-white text-[13px] font-medium uppercase tracking-[0.07em] hover:bg-sapin-deep transition-colors ${anim(
                 'animate-fade-up'
               )}`}
               style={{ animationDelay: '750ms' }}
@@ -71,7 +68,7 @@ export default function Features() {
 
           <div className="flex-1 flex flex-col px-5 sm:px-8 lg:px-12 py-8 sm:py-10 lg:py-14">
             <h2
-              className={`font-octosquares font-bold text-black uppercase leading-[1.05] text-center text-[clamp(1.4rem,4.5vw,3.2rem)] max-w-[48rem] mx-auto ${anim(
+              className={`font-titre font-bold text-sapin uppercase leading-[1.05] text-center text-[clamp(1.4rem,4.5vw,3.2rem)] max-w-[48rem] mx-auto ${anim(
                 'animate-fade-up'
               )}`}
               style={{ animationDelay: '500ms' }}
@@ -84,7 +81,7 @@ export default function Features() {
             </div>
 
             <p
-              className={`mt-8 sm:mt-10 lg:mt-12 text-center text-black text-[10px] sm:text-[11px] font-semibold uppercase leading-[1.6] tracking-[0.05em] max-w-[26rem] mx-auto pb-4 ${anim(
+              className={`mt-8 sm:mt-10 lg:mt-12 text-center text-sapin/75 text-[16px] leading-[1.6] max-w-[32rem] mx-auto pb-4 ${anim(
                 'animate-fade-up'
               )}`}
               style={{ animationDelay: '1100ms' }}
@@ -100,13 +97,13 @@ export default function Features() {
             >
               <a
                 href={lien('#contact')}
-                className="text-black text-[11px] font-semibold uppercase tracking-[0.05em] underline underline-offset-4 decoration-neutral-400 hover:decoration-neutral-900 transition-colors"
+                className="text-sapin text-[11px] font-semibold uppercase tracking-[0.05em] underline underline-offset-4 decoration-neutral-400 hover:decoration-neutral-900 transition-colors"
               >
                 {t.features.demanderDevis}
               </a>
               <a
                 href={lien('#realisations')}
-                className="text-black text-[11px] font-semibold uppercase tracking-[0.05em] underline underline-offset-4 decoration-neutral-400 hover:decoration-neutral-900 transition-colors"
+                className="text-sapin text-[11px] font-semibold uppercase tracking-[0.05em] underline underline-offset-4 decoration-neutral-400 hover:decoration-neutral-900 transition-colors"
               >
                 {t.commun.voirRealisations}
               </a>
@@ -119,14 +116,14 @@ export default function Features() {
 }
 
 function LogoMark() {
-  // Variante detouree sur fond blanc, pour la section blanche.
+  // Même variante que le hero : vert sapin sur fond clair.
   return (
     <img
-      src="/logo-vdh-white.webp"
-      alt="VDH Construct & Aménagements Extérieurs"
-      width={48}
+      src="/logo-sapin.svg"
+      alt="Vert Demain"
+      width={92}
       height={48}
-      className="h-9 w-9 sm:h-12 sm:w-12 flex-shrink-0 select-none"
+      className="h-11 w-auto sm:h-14 flex-shrink-0 select-none"
       draggable={false}
     />
   );

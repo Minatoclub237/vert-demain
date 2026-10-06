@@ -1,9 +1,10 @@
 import { useState, type FormEvent } from 'react';
 import { ArrowUpRight, Clock, Mail, MapPin, Phone } from 'lucide-react';
 import TexteRevele from '@/components/ui/TexteRevele';
+import { Blanc } from '@/components/ui/Vide';
 import { T } from '@/lib/i18n';
 
-const EMAIL = 'info@vdhamenagements.be';
+const EMAIL = 'clement.vertdemain@gmail.com';
 
 // Les listes du formulaire viennent du dictionnaire.
 
@@ -22,9 +23,9 @@ export default function Contact() {
       `${t.contact.champNom} : ${get('nom')}`,
       `${t.contact.champEmail} : ${get('email')}`,
       `${t.contact.champTel} : ${get('telephone')}`,
-      `Commune ou code postal : ${get('lieu')}`,
+      `${t.contact.champLieu} : ${get('lieu')}`,
       `${t.contact.champProjet} : ${get('type')}`,
-      `Démarrage souhaité : ${get('delai')}`,
+      `${t.contact.champDelai} : ${get('delai')}`,
       '',
       `${t.contact.champDescription} :`,
       get('message'),
@@ -38,58 +39,58 @@ export default function Contact() {
   };
 
   const field =
-    'w-full rounded-sm border border-neutral-300 bg-white px-4 py-3 text-[14px] text-black placeholder:text-black/40 outline-none transition-colors focus:border-black';
-  const label = 'block text-[11px] font-semibold uppercase tracking-[0.12em] text-black/60';
+    'w-full rounded-sm border border-neutral-300 bg-white px-4 py-3 text-[14px] text-sapin placeholder:text-sapin/40 outline-none transition-colors focus:border-sapin';
+  const label = 'block text-[11px] font-semibold uppercase tracking-[0.12em] text-sapin/60';
 
   return (
-    <section id="contact" className="relative z-[3] w-full bg-white font-inter text-black">
+    <section id="contact" className="relative z-[3] w-full bg-white font-inter text-sapin">
       <div className="mx-auto max-w-[1180px] px-6 sm:px-10 lg:px-14 py-16 sm:py-24">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-20">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-gold-dark">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-citron-dark">
               {t.contact.kicker}
             </p>
             <TexteRevele
               as="h2"
               texte={t.contact.titre}
               accent={t.contact.titreAccent}
-              accentClass="text-gold-dark"
-              className="mt-4 font-octosquares font-bold uppercase leading-[0.95] text-[clamp(2rem,5vw,3.4rem)]"
+              accentClass="text-citron-dark"
+              className="mt-4 font-titre font-bold uppercase leading-[0.95] text-[clamp(2rem,5vw,3.4rem)]"
             />
-            <p className="mt-5 max-w-[30rem] text-[14px] sm:text-[15px] leading-[1.6] text-black/70">
-              Décrivez votre projet en quelques lignes. Jordan vous rappelle pour convenir d’une
-              visite sur place, mesurer le terrain et vous remettre un devis gratuit.
+            <p className="mt-5 max-w-[30rem] text-[16px] leading-[1.6] text-sapin/75">
+              {t.contact.intro}
             </p>
 
             <div className="mt-10 flex flex-col divide-y divide-dashed divide-neutral-300 border-y border-dashed border-neutral-300">
               <a
-                href="tel:+32493083344"
-                className="flex items-center gap-3 py-4 text-[15px] transition-colors hover:text-gold-dark"
+                href="tel:+33679482492"
+                className="flex items-center gap-3 py-4 text-[15px] transition-colors hover:text-citron-dark"
               >
-                <Phone size={17} className="shrink-0 text-gold-dark" />
-                +32 493 08 33 44
+                <Phone size={17} className="shrink-0 text-citron-dark" />
+                {t.commun.telephone}
               </a>
               <a
                 href={`mailto:${EMAIL}`}
-                className="flex items-center gap-3 py-4 text-[15px] transition-colors hover:text-gold-dark"
+                className="flex items-center gap-3 py-4 text-[15px] transition-colors hover:text-citron-dark"
               >
-                <Mail size={17} className="shrink-0 text-gold-dark" />
+                <Mail size={17} className="shrink-0 text-citron-dark" />
                 {EMAIL}
               </a>
-              <p className="flex items-center gap-3 py-4 text-[15px] text-black/70">
-                <Clock size={17} className="shrink-0 text-gold-dark" />
-                Lundi – samedi, 8h – 18h · Dimanche fermé
+              <p className="flex items-center gap-3 py-4 text-[15px] text-sapin/70">
+                <Clock size={17} className="shrink-0 text-citron-dark" />
+                {/* Horaires à confirmer avec Clément : emplacement vide. */}
+                {t.contact.horaires || <Blanc className="w-56" />}
               </p>
-              <p className="flex items-center gap-3 py-4 text-[15px] text-black/70">
-                <MapPin size={17} className="shrink-0 text-gold-dark" />
+              <p className="flex items-center gap-3 py-4 text-[15px] text-sapin/70">
+                <MapPin size={17} className="shrink-0 text-citron-dark" />
                 {t.contact.zone}
               </p>
             </div>
 
             <ul className="mt-8 flex flex-col gap-3">
               {t.contact.puces.map((item) => (
-                <li key={item} className="flex items-start gap-3 text-[13px] text-black/70">
-                  <span className="mt-[7px] h-1 w-1 shrink-0 bg-dark" />
+                <li key={item} className="flex items-start gap-3 text-[15px] text-sapin/75">
+                  <span className="mt-[7px] h-1 w-1 shrink-0 bg-sapin" />
                   {item}
                 </li>
               ))}
@@ -122,7 +123,7 @@ export default function Contact() {
                     type="tel"
                     required
                     autoComplete="tel"
-                    placeholder="0470 12 34 56"
+                    placeholder={t.contact.placeholderTel}
                     className={`mt-2 ${field}`}
                   />
                 </div>
@@ -139,7 +140,7 @@ export default function Contact() {
                     type="email"
                     required
                     autoComplete="email"
-                    placeholder="marie.dupont@email.be"
+                    placeholder={t.contact.placeholderEmail}
                     className={`mt-2 ${field}`}
                   />
                 </div>
@@ -151,7 +152,7 @@ export default function Contact() {
                     id="lieu"
                     name="lieu"
                     required
-                    placeholder="94000"
+                    placeholder={t.contact.placeholderLieu}
                     className={`mt-2 ${field}`}
                   />
                 </div>
@@ -210,28 +211,26 @@ export default function Contact() {
                 />
               </div>
 
-              <label className="flex items-start gap-3 text-[12px] leading-[1.5] text-black/60">
+              <label className="flex items-start gap-3 text-[12px] leading-[1.5] text-sapin/60">
                 <input
                   type="checkbox"
                   name="consentement"
                   required
-                  className="mt-0.5 h-4 w-4 shrink-0 accent-black"
+                  className="mt-0.5 h-4 w-4 shrink-0 accent-sapin"
                 />
                 {t.contact.consentement}
               </label>
 
               <button
                 type="submit"
-                className="inline-flex items-center justify-center gap-2 rounded-sm bg-dark px-7 py-4 text-[13px] font-medium uppercase tracking-[0.07em] text-gold transition-colors hover:bg-black"
+                className="inline-flex items-center justify-center gap-2 rounded-sm bg-sapin px-7 py-4 text-[13px] font-medium uppercase tracking-[0.07em] text-citron transition-colors hover:bg-sapin-deep"
               >
                 {t.contact.envoyer}
                 <ArrowUpRight size={16} />
               </button>
 
-              <p className="text-[12px] text-black/50" aria-live="polite">
-                {sent
-                  ? 'Votre logiciel de messagerie s’est ouvert avec la demande pré-remplie : il ne reste qu’à l’envoyer.'
-                  : `Le formulaire ouvre votre messagerie avec la demande déjà rédigée. Vous préférez appeler ? +32 493 08 33 44.`}
+              <p className="text-[12px] text-sapin/50" aria-live="polite">
+                {sent ? t.contact.confirmation : t.contact.apresEnvoi}
               </p>
             </form>
           </div>

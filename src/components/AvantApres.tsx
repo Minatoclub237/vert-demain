@@ -3,11 +3,11 @@ import { ArrowRight } from 'lucide-react';
 import TexteRevele from '@/components/ui/TexteRevele';
 import { T, lien } from '@/lib/i18n';
 
-// Quatre chantiers dont on possede l'etat AVANT et l'etat FINI du meme endroit.
-// Chaque paire a ete confirmee sur un detail identifiable (mur peint, descente
-// d'eau, couvre-mur, toiture) : on n'affiche pas deux photos qui se ressemblent.
+// Deux jardins dont on possède l'état AVANT et l'état FINI du même endroit, repris
+// du site actuel du client. Chaque paire est confirmée sur un détail fixe (façade,
+// arche) ; la paire « palmiers » du site Wix a été écartée faute de preuve.
 // Seuls les slugs restent ici : les textes viennent du dictionnaire.
-const PAIRES = ['allee-pierre', 'passage-technique', 'muret-parterre', 'cloture-site'];
+const PAIRES = ['allee-gravillons', 'jasmin-arche'];
 
 export default function AvantApres() {
   const t = T();
@@ -71,20 +71,20 @@ export default function AvantApres() {
   return (
     <section
       id="avant-apres"
-      className="relative z-[3] rounded-t-[40px] bg-[#111111] font-inter text-white shadow-[0_-28px_60px_-18px_rgba(0,0,0,0.5)]"
+      className="relative z-[3] rounded-t-[40px] bg-sapin font-inter text-white shadow-[0_-28px_60px_-18px_rgba(0,0,0,0.5)]"
     >
       <div className="mx-auto max-w-[1400px] px-5 pt-20 sm:px-8 sm:pt-24 lg:px-12">
         <header className="max-w-[46rem]">
-          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-gold">
+          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-citron">
             {t.avantApres.kicker}
           </p>
           <TexteRevele
             as="h2"
             texte={t.avantApres.titre}
             accent={t.avantApres.titreAccent}
-            className="mt-3 font-octosquares text-[clamp(2.2rem,7vw,5rem)] font-bold uppercase leading-[0.9]"
+            className="mt-3 font-titre text-[clamp(2.2rem,7vw,5rem)] font-bold uppercase leading-[0.9]"
           />
-          <p className="mt-5 max-w-[34rem] text-[14px] leading-[1.6] text-white/60 sm:text-[15px]">
+          <p className="mt-5 max-w-[34rem] text-[16px] leading-[1.6] text-white/65">
             {t.avantApres.intro}
           </p>
         </header>
@@ -115,13 +115,13 @@ export default function AvantApres() {
                   }`}
                 >
                   <div
-                    className={`relative aspect-[4/3] max-h-[44vh] overflow-hidden rounded-2xl bg-black/40 ring-1 ring-white/10 sm:max-h-[52vh] lg:max-h-[62vh] ${
+                    className={`relative mx-auto aspect-[3/4] h-[44vh] max-w-full overflow-hidden rounded-2xl bg-sapin/40 ring-1 ring-white/10 sm:h-[52vh] lg:h-[68vh] ${
                       i % 2 ? 'lg:order-2' : ''
                     }`}
                   >
                     {/* Etat d'origine, dessous */}
                     <img
-                      src={`/avant-apres/${p}-avant.webp`}
+                      src={`/photos/${p}-avant.webp`}
                       alt={`${t.avantApres.avant} : ${tp.titre.toLowerCase()}`}
                       loading="lazy"
                       draggable={false}
@@ -129,7 +129,7 @@ export default function AvantApres() {
                     />
                     {/* Resultat, revele par le volet */}
                     <img
-                      src={`/avant-apres/${p}-apres.webp`}
+                      src={`/photos/${p}-apres.webp`}
                       alt={`${t.avantApres.apres} : ${tp.titre.toLowerCase()}`}
                       loading="lazy"
                       draggable={false}
@@ -139,15 +139,15 @@ export default function AvantApres() {
 
                     <div
                       aria-hidden
-                      className="absolute inset-y-0 w-[2px] bg-gold shadow-[0_0_18px_rgba(243,175,66,0.7)]"
+                      className="absolute inset-y-0 w-[2px] bg-citron shadow-[0_0_18px_rgba(191,255,86,0.7)]"
                       style={{ left: `${100 - pct}%`, opacity: pct > 2 && pct < 98 ? 1 : 0 }}
                     />
 
-                    <span className="absolute left-4 top-4 rounded-full bg-black/65 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.15em] text-white/80 backdrop-blur-sm">
+                    <span className="absolute left-4 top-4 rounded-full bg-sapin/65 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.15em] text-white/80 backdrop-blur-sm">
                       {t.avantApres.avant}
                     </span>
                     <span
-                      className="absolute right-4 top-4 rounded-full bg-gold px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.15em] text-dark transition-opacity duration-300"
+                      className="absolute right-4 top-4 rounded-full bg-citron px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.15em] text-sapin transition-opacity duration-300"
                       style={{ opacity: pct > 25 ? 1 : 0.25 }}
                     >
                       {t.avantApres.apres}
@@ -155,16 +155,16 @@ export default function AvantApres() {
                   </div>
 
                   <div>
-                    <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-gold">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-citron">
                       0{i + 1} · {tp.lieu}
                     </p>
                     <h3 className="mt-1.5 text-xl font-semibold leading-tight sm:text-2xl lg:text-3xl">
                       {tp.titre}
                     </h3>
-                    <p className="mt-2.5 max-w-[34rem] text-[13px] leading-[1.6] text-white/65 sm:text-[14px]">
+                    <p className="mt-2.5 max-w-[34rem] text-[16px] leading-[1.6] text-white/70">
                       {tp.detail}
                     </p>
-                    <p className="mt-3 border-l-2 border-gold/50 pl-3 text-[11px] leading-[1.5] text-white/40 sm:text-[12px]">
+                    <p className="mt-3 border-l-2 border-citron/50 pl-3 text-[13px] leading-[1.5] text-white/45">
                       {tp.repere}
                     </p>
 
@@ -172,7 +172,7 @@ export default function AvantApres() {
                       aria-hidden
                       className="mt-4 h-[3px] w-full max-w-[16rem] overflow-hidden rounded-full bg-white/10"
                     >
-                      <div className="h-full bg-gold" style={{ width: `${pct}%` }} />
+                      <div className="h-full bg-citron" style={{ width: `${pct}%` }} />
                     </div>
                   </div>
                 </article>
@@ -185,7 +185,7 @@ export default function AvantApres() {
       <div className="mx-auto max-w-[1400px] px-5 pb-20 sm:px-8 sm:pb-24 lg:px-12">
         <a
           href={lien('#contact')}
-          className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-[12px] font-medium uppercase tracking-[0.07em] text-black transition-colors hover:bg-gold"
+          className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-[12px] font-medium uppercase tracking-[0.07em] text-sapin transition-colors hover:bg-citron"
         >
           {t.avantApres.cta}
           <ArrowRight size={15} />

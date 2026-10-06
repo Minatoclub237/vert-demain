@@ -1,12 +1,13 @@
 import { useEffect, useRef, type PointerEvent as ReactPointerEvent } from 'react';
 
+// Photos du site actuel du client, en attendant celles d'Instagram.
 const IMAGES = [
-  '/chantier/1.webp',
-  '/chantier/2.webp',
-  '/chantier/3.webp',
-  '/chantier/4.webp',
-  '/chantier/5.webp',
-  '/chantier/6.webp',
+  '/photos/clement-arrosage-massif.webp',
+  '/photos/jardin-anglais-meuliere.webp',
+  '/photos/topiaire-conifere.webp',
+  '/photos/massif-palmiers-humilis.webp',
+  '/photos/jardin-cerisier-fleurs.webp',
+  '/photos/allee-gravillons-apres.webp',
 ];
 
 const SPEED = 0.8;

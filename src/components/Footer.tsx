@@ -1,47 +1,49 @@
-import { ArrowUpRight, Mail, MapPin, Phone } from 'lucide-react';
+import { ArrowUpRight, Instagram, Mail, MapPin, Phone } from 'lucide-react';
 import TexteRevele from '@/components/ui/TexteRevele';
-import { T, lien, PAGE_LEGALE, langue } from '@/lib/i18n';
-import SelecteurLangue from '@/components/ui/SelecteurLangue';
+import { T, lien, PAGE_LEGALE } from '@/lib/i18n';
 
 // Seules les ancres restent ici ; les libellés viennent du dictionnaire.
-const PRESTATIONS = ['#realisations-pavage', '#realisations-maconnerie', '#realisations-terrassement', '#realisations-clotures', '#contact'];
+const PRESTATIONS = ['#realisations-entretien', '#realisations-taille', '#realisations-creation', '#contrat'];
 const ENTREPRISE = ['#realisations', '#solutions', '#secteurs', '#faq'];
+
+// Comptes vérifiés le 06/10/2026 (liens présents sur clement-vertdemain.com).
+const INSTAGRAM = 'https://www.instagram.com/clement_vertdemain/';
+const TIKTOK = 'https://www.tiktok.com/@vertdemain';
 
 export default function Footer() {
   const t = T();
-  const l = langue();
   return (
-    <footer className="relative z-[3] w-full bg-gold font-inter text-dark">
-      <div className="absolute inset-2 sm:inset-3 border border-gold-dark rounded-sm pointer-events-none" />
-      <div className="absolute top-2 left-2 sm:top-3 sm:left-3 w-1 h-1 bg-dark" />
-      <div className="absolute top-2 right-2 sm:top-3 sm:right-3 w-1 h-1 bg-dark" />
-      <div className="absolute bottom-2 left-2 sm:bottom-3 sm:left-3 w-1 h-1 bg-dark" />
-      <div className="absolute bottom-2 right-2 sm:bottom-3 sm:right-3 w-1 h-1 bg-dark" />
+    <footer className="relative z-[3] w-full bg-citron font-inter text-sapin">
+      <div className="absolute inset-2 sm:inset-3 border border-citron-dark rounded-sm pointer-events-none" />
+      <div className="absolute top-2 left-2 sm:top-3 sm:left-3 w-1 h-1 bg-sapin" />
+      <div className="absolute top-2 right-2 sm:top-3 sm:right-3 w-1 h-1 bg-sapin" />
+      <div className="absolute bottom-2 left-2 sm:bottom-3 sm:left-3 w-1 h-1 bg-sapin" />
+      <div className="absolute bottom-2 right-2 sm:bottom-3 sm:right-3 w-1 h-1 bg-sapin" />
 
       <div className="relative mx-auto max-w-[1180px] px-6 sm:px-10 lg:px-14 pt-14 sm:pt-20 pb-6">
-        <div className="flex flex-col gap-8 border-b border-dashed border-gold-dark pb-12 lg:flex-row lg:items-end lg:justify-between">
+        <div className="flex flex-col gap-8 border-b border-dashed border-citron-dark pb-12 lg:flex-row lg:items-end lg:justify-between">
           <TexteRevele
             as="h2"
             texte={t.footer.titre}
             accent={t.footer.titreAccent}
-            accentClass="text-white"
-            className="max-w-[16ch] font-octosquares text-[clamp(1.9rem,5.5vw,3.6rem)] font-bold uppercase leading-[0.95] text-dark"
+            accentClass="text-citron-dark"
+            className="max-w-[16ch] font-titre text-[clamp(1.9rem,5.5vw,3.6rem)] font-bold uppercase leading-[0.95] text-sapin"
           />
 
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
             <a
               href={lien('#contact')}
-              className="inline-flex items-center justify-center gap-2 rounded-sm bg-dark px-7 py-4 text-[13px] font-medium uppercase tracking-[0.07em] text-gold transition-colors hover:bg-black"
+              className="inline-flex items-center justify-center gap-2 rounded-sm bg-sapin px-7 py-4 text-[13px] font-medium uppercase tracking-[0.07em] text-citron transition-colors hover:bg-sapin-deep"
             >
               {t.commun.devisGratuit}
               <ArrowUpRight size={16} />
             </a>
             <a
-              href="tel:+32493083344"
-              className="inline-flex items-center justify-center gap-2 rounded-sm border border-gold-dark px-7 py-4 text-[13px] font-medium uppercase tracking-[0.07em] text-dark transition-colors hover:bg-black/5"
+              href="tel:+33679482492"
+              className="inline-flex items-center justify-center gap-2 rounded-sm border border-citron-dark px-7 py-4 text-[13px] font-medium uppercase tracking-[0.07em] text-sapin transition-colors hover:bg-sapin/5"
             >
               <Phone size={15} />
-              +32 493 08 33 44
+              {t.commun.telephone}
             </a>
           </div>
         </div>
@@ -52,37 +54,52 @@ export default function Footer() {
             <a
               href={lien('#hero')}
               aria-label={t.footer.retourHaut}
-              className="group flex w-fit items-center gap-3 rounded-sm transition-opacity hover:opacity-80"
+              className="group flex w-fit items-center rounded-sm transition-opacity hover:opacity-80"
             >
-              <LogoMark />
-              <span className="font-octosquares text-lg font-medium tracking-tight sm:text-[22px]">
-                VDH Construct
-              </span>
+              <img
+                src="/logo-sapin.svg"
+                alt="Vert Demain"
+                width={115}
+                height={60}
+                className="h-14 w-auto select-none"
+                draggable={false}
+              />
             </a>
-            <p className="max-w-[24rem] text-[13px] leading-[1.6] text-dark/70">
+            <p className="max-w-[24rem] text-[15px] leading-[1.6] text-sapin/75">
               {t.footer.description}
             </p>
 
-            <a
-              href="https://www.facebook.com/p/VDH-construct-am%C3%A9nagements-ext%C3%A9rieurs-61567285237457/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex w-fit items-center gap-2.5 rounded-sm border border-gold-dark bg-white/40 px-3.5 py-2.5 text-[13px] font-medium text-dark transition-colors hover:bg-white/70"
-            >
-              <LogoFacebook />
-              {t.footer.facebook}
-            </a>
+            <div className="flex flex-wrap gap-2">
+              <a
+                href={INSTAGRAM}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex w-fit items-center gap-2 rounded-sm border border-citron-dark bg-white/40 px-3.5 py-2.5 text-[13px] font-medium text-sapin transition-colors hover:bg-white/70"
+              >
+                <Instagram size={17} aria-hidden />
+                {t.footer.instagram}
+              </a>
+              <a
+                href={TIKTOK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex w-fit items-center gap-2 rounded-sm border border-citron-dark bg-white/40 px-3.5 py-2.5 text-[13px] font-medium text-sapin transition-colors hover:bg-white/70"
+              >
+                <LogoTiktok />
+                {t.footer.tiktok}
+              </a>
+            </div>
           </div>
 
           <nav className="flex flex-col gap-3">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-dark/50">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-sapin/55">
               {t.footer.colPrestations}
             </p>
             {PRESTATIONS.map((href, i) => (
               <a
                 key={href}
                 href={lien(href)}
-                className="text-[13px] text-dark/80 transition-colors hover:text-dark"
+                className="text-[15px] text-sapin/80 transition-colors hover:text-sapin"
               >
                 {t.footer.prestations[i]}
               </a>
@@ -90,14 +107,14 @@ export default function Footer() {
           </nav>
 
           <nav className="flex flex-col gap-3">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-dark/50">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-sapin/55">
               {t.footer.colEntreprise}
             </p>
             {ENTREPRISE.map((href, i) => (
               <a
                 key={href}
                 href={lien(href)}
-                className="text-[13px] text-dark/80 transition-colors hover:text-dark"
+                className="text-[15px] text-sapin/80 transition-colors hover:text-sapin"
               >
                 {t.footer.entreprise[i]}
               </a>
@@ -105,54 +122,47 @@ export default function Footer() {
           </nav>
 
           <div className="flex flex-col gap-3">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-dark/50">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-sapin/55">
               {t.footer.colContact}
             </p>
-            <p className="flex items-start gap-2 text-[13px] text-dark/80">
-              <MapPin size={15} className="mt-0.5 shrink-0" />
-              Rue Nouvelle Route 135
-              <br />
-              4480 Engis
+            {/* Zone d'intervention plutôt que l'adresse : c'est le domicile du client
+                (elle figure dans les mentions légales, où elle est obligatoire). */}
+            <p className="flex items-start gap-2 text-[15px] text-sapin/80">
+              <MapPin size={15} className="mt-1 shrink-0" />
+              {t.footer.zone}
             </p>
             <a
-              href="tel:+32493083344"
-              className="flex items-center gap-2 text-[13px] text-dark/80 transition-colors hover:text-dark"
+              href="tel:+33679482492"
+              className="flex items-center gap-2 text-[15px] text-sapin/80 transition-colors hover:text-sapin"
             >
               <Phone size={15} />
-              +32 493 08 33 44
+              {t.commun.telephone}
             </a>
             <a
-              href="mailto:info@vdhamenagements.be"
-              className="flex items-center gap-2 text-[13px] text-dark/80 transition-colors hover:text-dark"
+              href="mailto:clement.vertdemain@gmail.com"
+              className="flex items-center gap-2 text-[15px] text-sapin/80 transition-colors hover:text-sapin"
             >
-              <Mail size={15} />
-              info@vdhamenagements.be
+              <Mail size={15} className="shrink-0" />
+              <span>clement.vertdemain<wbr />@gmail.com</span>
             </a>
-            <p className="mt-2 text-[11px] uppercase tracking-[0.1em] text-dark/50">
-              {t.footer.horaires}
-            </p>
           </div>
         </div>
 
-        {/* Numero verifie le 18/09/2026 au Public Search de la Banque-Carrefour des Entreprises.
-            Entite personne physique « Vanderheyden, Jordan » : ni RPM ni capital a mentionner. */}
-        <div className="flex flex-col gap-3 border-t border-dashed border-gold-dark pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-[11px] uppercase tracking-[0.1em] text-dark/60">
-            © 2026 VDH Construct · Engis · BCE / TVA&nbsp;BE&nbsp;1015.396.691
+        {/* SIRET vérifié le 06/10/2026 dans le répertoire SIRENE (établissement siège actif). */}
+        <div className="flex flex-col gap-3 border-t border-dashed border-citron-dark pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-[11px] uppercase tracking-[0.1em] text-sapin/65">
+            © 2026 Vert Demain · Brunoy · SIRET&nbsp;890&nbsp;178&nbsp;940&nbsp;00023
           </p>
-          <SelecteurLangue />
           <div className="flex flex-wrap gap-x-6 gap-y-2">
             <a
-              href={PAGE_LEGALE[l]}
-              className="text-[11px] uppercase tracking-[0.1em] text-dark/60 underline-offset-2 transition-colors hover:text-dark hover:underline"
+              href={PAGE_LEGALE}
+              className="text-[11px] uppercase tracking-[0.1em] text-sapin/65 underline-offset-2 transition-colors hover:text-sapin hover:underline"
             >
               {t.footer.mentions}
             </a>
-            {/* Le volet RGPD vit dans les mentions légales (bloc 06) tant que le site
-                reste une page unique sans formulaire serveur ni traceur. */}
             <a
-              href={`${PAGE_LEGALE[l]}#donnees`}
-              className="text-[11px] uppercase tracking-[0.1em] text-dark/60 underline-offset-2 transition-colors hover:text-dark hover:underline"
+              href={`${PAGE_LEGALE}#donnees`}
+              className="text-[11px] uppercase tracking-[0.1em] text-sapin/65 underline-offset-2 transition-colors hover:text-sapin hover:underline"
             >
               {t.footer.donnees}
             </a>
@@ -163,32 +173,11 @@ export default function Footer() {
   );
 }
 
-function LogoFacebook() {
-  // Logo officiel dans sa couleur de marque (#1877F2), pas une icone monochrome.
+function LogoTiktok() {
+  // Note de musique TikTok, en monochrome comme l'icône Instagram voisine.
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden focusable="false" className="shrink-0">
-      <path
-        fill="#1877F2"
-        d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.09 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.96h-1.51c-1.49 0-1.96.93-1.96 1.89v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.09 24 18.1 24 12.07Z"
-      />
-      <path
-        fill="#FFFFFF"
-        d="m16.67 15.56.53-3.49h-3.33V9.81c0-.96.47-1.89 1.96-1.89h1.51V4.96s-1.37-.24-2.68-.24c-2.74 0-4.53 1.67-4.53 4.69v2.66H7.08v3.49h3.05V24a12.1 12.1 0 0 0 3.74 0v-8.44h2.8Z"
-      />
+    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden focusable="false" className="shrink-0" fill="currentColor">
+      <path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07Z" />
     </svg>
-  );
-}
-
-function LogoMark() {
-  // Meme variante que le hero : le footer est lui aussi sur fond dore.
-  return (
-    <img
-      src="/logo-vdh-gold.webp"
-      alt="VDH Construct & Aménagements Extérieurs"
-      width={48}
-      height={48}
-      className="h-9 w-9 sm:h-12 sm:w-12 flex-shrink-0 select-none"
-      draggable={false}
-    />
   );
 }

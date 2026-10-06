@@ -20,7 +20,7 @@ type Props = {
 export default function TexteRevele({
   texte,
   accent,
-  accentClass = 'text-gold',
+  accentClass = 'text-citron',
   as = 'span',
   className = '',
   delai = 0,

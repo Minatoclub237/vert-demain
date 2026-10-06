@@ -18,8 +18,6 @@ export default defineConfig({
       input: {
         main: resolve(racine, 'index.html'),
         mentionsLegales: resolve(racine, 'mentions-legales.html'),
-        nl: resolve(racine, 'nl/index.html'),
-        nlJuridisch: resolve(racine, 'nl/juridische-vermeldingen.html'),
       },
     },
   },

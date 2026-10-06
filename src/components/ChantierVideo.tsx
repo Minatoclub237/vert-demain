@@ -1,18 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import { Play, Phone } from 'lucide-react';
 import TexteRevele from '@/components/ui/TexteRevele';
+import Vide from '@/components/ui/Vide';
 import { T, lien } from '@/lib/i18n';
 
-// Cinq chantiers filmes au telephone par l'entreprise, remontes dans l'ordre du recit :
-// l'etat de depart, puis ce qui se construit, puis ce qui est fini.
-// Seuls les fichiers restent ici : titres et descriptions viennent du dictionnaire.
-const CLIPS = [
-  { src: '/chantier-video/cour-avant-travaux.mp4', poster: '/chantier-video/cour-avant-travaux.jpg', duree: '11 s' },
-  { src: '/chantier-video/annexe-blocs.mp4', poster: '/chantier-video/annexe-blocs.jpg', duree: '13 s' },
-  { src: '/chantier-video/cloture-jardin.mp4', poster: '/chantier-video/cloture-jardin.jpg', duree: '8 s' },
-  { src: '/chantier-video/muret-brique-rue.mp4', poster: '/chantier-video/muret-brique-rue.jpg', duree: '18 s' },
-  { src: '/chantier-video/cour-pavee.mp4', poster: '/chantier-video/cour-pavee.jpg', duree: '21 s' },
-];
+// Cinq emplacements vidéo, vides en attendant les fichiers TikTok du client
+// (portrait 9:16, H.264 sans audio). Titres et descriptions : dictionnaire.
+const CLIPS: { src: string; poster: string; duree: string }[] = Array.from({ length: 5 }, () => ({
+  src: '',
+  poster: '',
+  duree: '',
+}));
 
 const PAS = 42; // degres entre deux cartes sur le cylindre
 
@@ -104,28 +102,28 @@ export default function ChantierVideo() {
   return (
     <section
       id="chantier"
-      className="relative z-[3] rounded-t-[40px] bg-[#0a0a0a] font-inter text-white shadow-[0_-28px_60px_-18px_rgba(0,0,0,0.5)]"
+      className="relative z-[3] rounded-t-[40px] bg-sapin-deep font-inter text-white shadow-[0_-28px_60px_-18px_rgba(0,0,0,0.5)]"
     >
       <div ref={rangeRef} className="relative h-[480vh]">
         <div className="sticky top-0 h-screen overflow-hidden supports-[height:100svh]:h-[100svh]">
           {/* Halo qui suit la carte de face */}
           <div
             aria-hidden
-            className="pointer-events-none absolute left-1/2 top-1/2 h-[70vmin] w-[70vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold/10 blur-[90px]"
+            className="pointer-events-none absolute left-1/2 top-1/2 h-[70vmin] w-[70vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-citron/10 blur-[90px]"
           />
 
           <div className="relative mx-auto flex h-full max-w-[1400px] flex-col px-5 pb-8 pt-20 sm:px-8 sm:pt-24 lg:px-12">
             <header className="shrink-0">
-              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-gold">
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-citron">
                 {t.chantier.kicker}
               </p>
               <TexteRevele
                 as="h2"
                 texte={t.chantier.titre}
                 accent={t.chantier.titreAccent}
-                className="mt-3 font-octosquares text-[clamp(2.2rem,8vw,5.5rem)] font-bold uppercase leading-[0.9]"
+                className="mt-3 font-titre text-[clamp(2.2rem,8vw,5.5rem)] font-bold uppercase leading-[0.9]"
               />
-              <p className="mt-4 max-w-[30rem] text-[14px] leading-[1.6] text-white/60 sm:text-[15px]">
+              <p className="mt-4 max-w-[30rem] text-[16px] leading-[1.6] text-white/65">
                 {t.chantier.intro}
               </p>
             </header>
@@ -144,7 +142,7 @@ export default function ChantierVideo() {
                   const on = i === actif;
                   return (
                     <div
-                      key={c.src}
+                      key={i}
                       className="absolute"
                       style={{
                         transformStyle: 'preserve-3d',
@@ -159,38 +157,44 @@ export default function ChantierVideo() {
                       <figure
                         className={`relative w-[min(46vw,196px)] overflow-hidden rounded-2xl border transition-[opacity,border-color,box-shadow,filter] duration-500 sm:w-[min(40vw,290px)] ${
                           on
-                            ? 'border-gold/70 opacity-100 shadow-[0_28px_70px_-20px_rgba(0,0,0,0.9)]'
+                            ? 'border-citron/70 opacity-100 shadow-[0_28px_70px_-20px_rgba(0,0,0,0.9)]'
                             : 'border-white/10 opacity-45 grayscale'
                         }`}
                         style={{ aspectRatio: '9 / 16' }}
                       >
-                        <video
-                          ref={(el) => { videosRef.current[i] = el; }}
-                          src={c.src}
-                          poster={c.poster}
-                          muted
-                          loop
-                          playsInline
-                          preload={i === 0 ? 'metadata' : 'none'}
-                          className="absolute inset-0 h-full w-full object-cover"
-                        />
+                        {c.src ? (
+                          <video
+                            ref={(el) => { videosRef.current[i] = el; }}
+                            src={c.src}
+                            poster={c.poster}
+                            muted
+                            loop
+                            playsInline
+                            preload={i === 0 ? 'metadata' : 'none'}
+                            className="absolute inset-0 h-full w-full object-cover"
+                          />
+                        ) : (
+                          <Vide type="video" label={t.commun.videoAVenir} className="absolute inset-0 rounded-2xl" />
+                        )}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/25" />
 
                         <figcaption className="absolute inset-x-3 bottom-3">
                           <div className="flex items-center gap-2">
-                            <span className="font-mono text-[10px] tracking-[0.15em] text-gold">
+                            <span className="font-mono text-[10px] tracking-[0.15em] text-citron">
                               0{i + 1}
                             </span>
-                            <span className="font-mono text-[10px] tracking-[0.12em] text-white/50">
-                              {c.duree}
-                            </span>
+                            {c.duree && (
+                              <span className="font-mono text-[10px] tracking-[0.12em] text-white/50">
+                                {c.duree}
+                              </span>
+                            )}
                           </div>
                           <p className="mt-1 text-[13px] font-semibold leading-tight text-white sm:text-[15px]">
                             {t.chantier.clips[i].titre}
                           </p>
                         </figcaption>
 
-                        {!on && (
+                        {!on && c.src && (
                           <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-black/45 p-2.5 backdrop-blur-sm">
                             <Play size={16} className="text-white/80" />
                           </span>
@@ -207,15 +211,17 @@ export default function ChantierVideo() {
               <div className="flex flex-wrap items-end justify-between gap-4">
                 <div className="max-w-[34rem]">
                   <p className="text-lg font-semibold leading-tight sm:text-xl">
-                    {t.chantier.clips[actif].titre}
+                    {t.chantier.clips[actif].titre || `0${actif + 1} — ${t.commun.videoAVenir}`}
                   </p>
-                  <p className="mt-1.5 text-[13px] leading-[1.6] text-white/60 sm:text-sm">
-                    {t.chantier.clips[actif].detail}
-                  </p>
+                  {t.chantier.clips[actif].detail && (
+                    <p className="mt-1.5 text-[15px] leading-[1.6] text-white/65">
+                      {t.chantier.clips[actif].detail}
+                    </p>
+                  )}
                 </div>
                 <a
                   href={lien('#contact')}
-                  className="inline-flex shrink-0 items-center gap-2 rounded-full bg-white px-5 py-2.5 text-[12px] font-medium uppercase tracking-[0.07em] text-black transition-colors hover:bg-gold"
+                  className="inline-flex shrink-0 items-center gap-2 rounded-full bg-white px-5 py-2.5 text-[12px] font-medium uppercase tracking-[0.07em] text-sapin transition-colors hover:bg-citron"
                 >
                   <Phone size={14} />
                   {t.commun.devisGratuit}
@@ -223,11 +229,11 @@ export default function ChantierVideo() {
               </div>
 
               <div className="mt-4 flex gap-1.5" aria-hidden>
-                {CLIPS.map((c, i) => (
+                {CLIPS.map((_, i) => (
                   <span
-                    key={c.src}
+                    key={i}
                     className={`h-[3px] flex-1 rounded-full transition-colors duration-500 ${
-                      i === actif ? 'bg-gold' : 'bg-white/15'
+                      i === actif ? 'bg-citron' : 'bg-white/15'
                     }`}
                   />
                 ))}

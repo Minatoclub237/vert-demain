@@ -1,59 +1,18 @@
-// Deux langues, deux URL distinctes : / (fr) et /nl/.
-// Chaque langue est une entree Vite separee, donc la locale est FIXE pour toute
-// la duree de la page. Pas besoin de contexte React ni de re-rendu : on la pose
-// une fois au montage et les composants la lisent.
+// Site en français uniquement (clientèle de l'Essonne). Les composants lisent
+// leurs textes via T() : le dictionnaire reste séparé du code de mise en page.
 
 import { FR } from './textes-fr';
-import { NL } from './textes-nl';
-
-export type Locale = 'fr' | 'nl';
 
 export type Textes = typeof FR;
 
-const DICTIONNAIRES: Record<Locale, Textes> = {
-  fr: FR,
-  nl: NL,
-};
-
-let courante: Locale = 'fr';
-
-export function definirLangue(l: Locale) {
-  courante = l;
-  if (typeof document !== 'undefined') document.documentElement.lang = BALISE_LANG[l];
-}
-
-export function langue(): Locale {
-  return courante;
-}
-
-/** Les textes de la langue en cours. Appelé pendant le rendu : `const t = T();` */
+/** Les textes du site. Appelé pendant le rendu : `const t = T();` */
 export function T(): Textes {
-  return DICTIONNAIRES[courante];
+  return FR;
 }
 
-// fr-BE et nl-BE : le site vise la Belgique. L'anglais reste neutre.
-export const BALISE_LANG: Record<Locale, string> = {
-  fr: 'fr-BE',
-  nl: 'nl-BE',
-};
+export const PAGE_LEGALE = '/mentions-legales';
 
-/** Racine de chaque langue, utilisée par le sélecteur et les liens internes. */
-export const RACINE: Record<Locale, string> = {
-  fr: '/',
-  nl: '/nl/',
-};
-
-export const PAGE_LEGALE: Record<Locale, string> = {
-  fr: '/mentions-legales',
-  nl: '/nl/juridische-vermeldingen',
-};
-
-export const NOM_LANGUE: Record<Locale, string> = {
-  fr: 'Français',
-  nl: 'Nederlands',
-};
-
-/** Préfixe les ancres internes pour qu'un lien depuis /nl/ reste sur /nl/. */
-export function lien(ancre: string, l: Locale = courante): string {
-  return ancre.startsWith('#') ? `${RACINE[l]}${ancre}`.replace('//#', '/#') : ancre;
+/** Les ancres internes pointent vers la page d'accueil, y compris depuis les mentions légales. */
+export function lien(ancre: string): string {
+  return ancre.startsWith('#') ? `/${ancre}` : ancre;
 }

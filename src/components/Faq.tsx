@@ -12,42 +12,42 @@ import {
 } from '@/components/ui/accordion';
 
 type CategoryKey = 'budget' | 'chantier' | 'garanties';
-type Canal = 'tel' | 'mail' | 'whatsapp' | 'page';
+type Canal = 'tel' | 'mail' | 'sms' | 'page';
 
-const TEL = '+32493083344';
-const WA = 'https://wa.me/32493083344';
-const MAIL = 'info@vdhamenagements.be';
+const TEL = '+33679482492';
+const MAIL = 'clement.vertdemain@gmail.com';
 
-// Le routage des appels a l'action ne depend PAS de la langue : meme ordre
-// d'objections dans chaque dictionnaire, donc meme canal a chaque position.
+// Le routage des appels à l'action suit l'ordre des objections du dictionnaire :
+// même position, même canal. SMS plutôt que WhatsApp : rien n'indique que le client
+// l'utilise, alors qu'un SMS (ou MMS avec photo) arrive toujours sur son mobile.
 const CANAUX: Record<CategoryKey, { canal: Canal; ancre?: string }[]> = {
   budget: [
     { canal: 'mail' },
     { canal: 'page', ancre: '#contact' },
     { canal: 'mail' },
-    { canal: 'whatsapp' },
+    { canal: 'sms' },
     { canal: 'page', ancre: '#contact' },
   ],
   chantier: [
     { canal: 'tel' },
     { canal: 'mail' },
-    { canal: 'whatsapp' },
-    { canal: 'tel' },
-    { canal: 'page', ancre: '#chantier' },
+    { canal: 'sms' },
+    { canal: 'page', ancre: '#avant-apres' },
+    { canal: 'page', ancre: '#contrat' },
   ],
   garanties: [
     { canal: 'tel' },
-    { canal: 'tel' },
-    { canal: 'page', ancre: '#contact' },
     { canal: 'page', ancre: '#realisations' },
+    { canal: 'mail' },
+    { canal: 'page', ancre: '#contact' },
     { canal: 'mail' },
   ],
 };
 
 const CATEGORIES: CategoryKey[] = ['budget', 'chantier', 'garanties'];
 
-// Destination reelle du CTA : appel, e-mail pre-rempli, WhatsApp ou ancre interne.
-// Le sujet et le corps du mail viennent du dictionnaire, donc traduits.
+// Destination réelle du CTA : appel, e-mail pré-rempli, SMS ou ancre interne.
+// Le sujet et le corps du mail viennent du dictionnaire.
 function destination(
   categorie: CategoryKey,
   idx: number,
@@ -55,7 +55,7 @@ function destination(
 ): string {
   const { canal, ancre } = CANAUX[categorie][idx];
   if (canal === 'tel') return `tel:${TEL}`;
-  if (canal === 'whatsapp') return WA;
+  if (canal === 'sms') return `sms:${TEL}`;
   if (canal === 'mail') {
     if (!item.sujet) return `mailto:${MAIL}`;
     const q = `subject=${encodeURIComponent(item.sujet)}&body=${encodeURIComponent(item.corps ?? '')}`;
@@ -68,7 +68,7 @@ function IconeCanal({ canal }: { canal: Canal }) {
   const taille = 14;
   if (canal === 'tel') return <Phone size={taille} aria-hidden />;
   if (canal === 'mail') return <Mail size={taille} aria-hidden />;
-  if (canal === 'whatsapp') return <MessageCircle size={taille} aria-hidden />;
+  if (canal === 'sms') return <MessageCircle size={taille} aria-hidden />;
   return <ArrowRight size={taille} aria-hidden />;
 }
 
@@ -92,13 +92,13 @@ export default function Faq() {
                 as="h2"
                 texte={t.faq.titre}
                 accent={t.faq.titreAccent}
-                className="mt-5 font-octosquares font-bold uppercase tracking-[-0.01em] leading-[1.02] text-foreground text-[clamp(1.8rem,4.5vw,3.2rem)]"
+                className="mt-5 font-titre font-bold uppercase tracking-[-0.01em] leading-[1.02] text-foreground text-[clamp(1.8rem,4.5vw,3.2rem)]"
               />
             </FadeUp>
           </div>
 
           <FadeUp delay={0.3} className="max-w-sm">
-            <p className="text-sm sm:text-base text-foreground/60 leading-relaxed">
+            <p className="text-base text-foreground/65 leading-relaxed">
               {t.faq.intro}
             </p>
           </FadeUp>
@@ -144,11 +144,11 @@ export default function Faq() {
                 className="border border-white/10 bg-landing-surface p-6"
               >
                 <h3 className="text-lg font-semibold text-foreground">{t.faq.reserveTitre}</h3>
-                <p className="mt-2 text-sm text-foreground/60 leading-relaxed">
+                <p className="mt-2 text-[15px] text-foreground/65 leading-relaxed">
                   {t.faq.reserveTexte}
                 </p>
                 <a
-                  href="mailto:info@vdhamenagements.be"
+                  href={`mailto:${MAIL}`}
                   className="mt-6 inline-flex items-center gap-1 text-sm text-foreground hover:text-foreground/80"
                 >
                   {t.faq.reserveCta} <span aria-hidden>→</span>
@@ -171,14 +171,11 @@ export default function Faq() {
                         <ChevronDown size={16} />
                       </span>
                     </AccordionTrigger>
-                    <AccordionContent className="flex flex-col items-start pb-7 text-sm leading-relaxed text-foreground/60">
+                    <AccordionContent className="flex flex-col items-start pb-7 text-base leading-relaxed text-foreground/70">
                       <p>{item.a}</p>
                       <a
                         href={destination(active, idx, item)}
-                        {...(CANAUX[active][idx].canal === 'whatsapp'
-                          ? { target: '_blank', rel: 'noopener noreferrer' }
-                          : {})}
-                        className="mt-5 inline-flex w-fit items-center gap-2 rounded-full bg-gold px-5 py-2.5 text-[12px] font-semibold uppercase tracking-[0.07em] text-dark transition-colors hover:bg-white"
+                        className="mt-5 inline-flex w-fit items-center gap-2 rounded-full bg-citron px-5 py-2.5 text-[12px] font-semibold uppercase tracking-[0.07em] text-sapin transition-colors hover:bg-creme"
                       >
                         <IconeCanal canal={CANAUX[active][idx].canal} />
                         {item.cta}

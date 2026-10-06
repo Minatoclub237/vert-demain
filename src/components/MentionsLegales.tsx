@@ -1,16 +1,23 @@
 import { ArrowLeft, Mail, MapPin, Phone } from 'lucide-react';
-import { T, RACINE, langue } from '@/lib/i18n';
+import { T } from '@/lib/i18n';
+import { Blanc } from '@/components/ui/Vide';
 
-// Toutes les donnees d'identification proviennent du Public Search de la
-// Banque-Carrefour des Entreprises, consulte le 18 septembre 2026.
-// Entite PERSONNE PHYSIQUE : pas de RPM, pas de capital, pas de gerant a mentionner.
+// Identification vérifiée le 06/10/2026 dans le répertoire SIRENE (recherche-entreprises
+// .api.gouv.fr) : Clément Lasfont, entrepreneur individuel, SIREN 890 178 940, siège
+// 29 avenue du Belvédère 91800 Brunoy (SIRET …00023, actif). Clé de TVA FR53 recalculée.
 //
-// TODO client — a demander a Jordan Vanderheyden puis a inscrire ici :
-//   1. Assurance RC professionnelle : compagnie, numero de police, etendue geographique
-//   2. Assurance decennale (obligatoire en Belgique pour le gros oeuvre) : idem
-//   3. Eventuelle agreation d'entrepreneur (categorie + classe), si elle existe
-// En attendant, la page renvoie a la communication des attestations sur demande :
-// c'est exact et verifiable, contrairement a un numero de police invente.
+// TODO client — à demander à Clément Lasfont puis à inscrire ici :
+//   1. N° de déclaration services à la personne (SAP), condition du crédit d'impôt
+//      annoncé sur tout le site. Emplacement laissé vide ci-dessous.
+//   2. Médiateur de la consommation (nom, adresse, site) : obligatoire pour la vente
+//      aux particuliers (art. L.612-1 du Code de la consommation). Emplacement vide.
+//   3. Immatriculation : « R.C.S. Évry » est repris de son site actuel, non confirmé
+//      par SIRENE (activité principale déclarée : 62.01Z, programmation informatique).
+//      À faire vérifier et mettre à jour par le client.
+//   4. Assureur et n° de contrat, s'il souhaite les afficher.
+
+const MEDIATEUR = '';
+const NUMERO_SAP = '';
 
 function Bloc({
   titre,
@@ -24,115 +31,103 @@ function Bloc({
   children: React.ReactNode;
 }) {
   return (
-    <section id={ancre} className="scroll-mt-6 border-t border-black/10 py-9">
+    <section id={ancre} className="scroll-mt-6 border-t border-sapin/10 py-9">
       <div className="grid gap-4 lg:grid-cols-[13rem_1fr] lg:gap-10">
         <div>
-          <p className="font-mono text-[11px] uppercase tracking-[0.15em] text-gold-dark">{numero}</p>
-          <h2 className="mt-1 text-lg font-semibold leading-tight text-black sm:text-xl">{titre}</h2>
+          <p className="font-mono text-[11px] uppercase tracking-[0.15em] text-citron-dark">{numero}</p>
+          <h2 className="mt-1 text-lg font-semibold leading-tight text-sapin sm:text-xl">{titre}</h2>
         </div>
-        <div className="max-w-[46rem] space-y-3 text-[14px] leading-[1.7] text-black/70">{children}</div>
+        <div className="max-w-[46rem] space-y-3 text-[16px] leading-[1.7] text-sapin/75">{children}</div>
       </div>
     </section>
   );
 }
 
-const A = 'font-medium text-gold-dark underline underline-offset-2';
+const A = 'font-medium text-citron-dark underline underline-offset-2';
+const MAIL = 'clement.vertdemain@gmail.com';
 
 export default function MentionsLegales() {
   const t = T();
   const g = t.legal;
-  const l = langue();
 
-  const identite = [
-    [g.etiquettes.denomination, 'Vanderheyden, Jordan'],
+  const identite: [string, React.ReactNode][] = [
+    [g.etiquettes.editeur, 'Clément Lasfont'],
     [g.etiquettes.forme, g.formeValeur],
-    [g.etiquettes.nomCommercial, 'VDH Construct & aménagement extérieur'],
-    [g.etiquettes.siege, g.siegeValeur],
-    [g.etiquettes.bce, '1015.396.691'],
-    [g.etiquettes.tva, 'BE 1015.396.691'],
-    [g.etiquettes.ue, '2.365.243.644'],
-    [g.etiquettes.debut, g.debutValeur],
-    [g.etiquettes.responsable, 'Jordan Vanderheyden'],
+    [g.etiquettes.nomUsage, 'Vert Demain'],
+    [g.etiquettes.adresse, g.adresseValeur],
+    [g.etiquettes.siret, '890 178 940 00023'],
+    [g.etiquettes.rcs, 'R.C.S. Évry 890 178 940'],
+    [g.etiquettes.tva, 'FR53 890 178 940'],
+    [g.etiquettes.sap, NUMERO_SAP || <Blanc />],
+    [g.etiquettes.responsable, 'Clément Lasfont'],
   ];
 
   return (
-    <main className="min-h-screen bg-[#E8E3DD] font-inter">
+    <main className="min-h-screen bg-creme font-inter">
       <div className="mx-auto max-w-[1100px] px-5 py-14 sm:px-8 sm:py-20 lg:px-12">
-        <a
-          href={RACINE[l]}
-          className="inline-flex items-center gap-2 text-[13px] font-medium text-black/60 transition-colors hover:text-black"
-        >
-          <ArrowLeft size={15} />
-          {t.commun.retourSite}
-        </a>
+        <div className="flex items-center justify-between gap-6">
+          <a
+            href="/"
+            className="inline-flex items-center gap-2 text-[14px] font-medium text-sapin/65 transition-colors hover:text-sapin"
+          >
+            <ArrowLeft size={15} />
+            {t.commun.retourSite}
+          </a>
+          <img src="/logo-sapin.svg" alt="Vert Demain" width={92} height={48} className="h-11 w-auto" />
+        </div>
 
         <header className="mt-10 max-w-[46rem]">
-          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-gold-dark">{g.kicker}</p>
-          <h1 className="mt-3 font-octosquares text-[clamp(2rem,6vw,3.6rem)] font-bold uppercase leading-[0.95] text-black">
-            {g.titre} <span className="text-gold-dark">{g.titreAccent}</span>
+          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-citron-dark">{g.kicker}</p>
+          <h1 className="mt-3 font-titre text-[clamp(2rem,6vw,3.6rem)] font-bold uppercase leading-[0.95] text-sapin">
+            {g.titre} <span className="text-citron-dark">{g.titreAccent}</span>
           </h1>
-          <p className="mt-5 text-[14px] leading-[1.7] text-black/60 sm:text-[15px]">{g.intro}</p>
+          <p className="mt-5 text-[16px] leading-[1.7] text-sapin/65">{g.intro}</p>
         </header>
 
         <div className="mt-12">
           <Bloc numero="01" titre={g.editeurTitre}>
             <p>{g.editeurTexte}</p>
-            <dl className="mt-5 overflow-hidden rounded-xl border border-black/10 bg-white/50">
+            <dl className="mt-5 overflow-hidden rounded-xl border border-sapin/10 bg-white/60">
               {identite.map(([label, valeur], i) => (
                 <div
                   key={label}
-                  className={`grid gap-1 px-4 py-3 sm:grid-cols-[16rem_1fr] sm:gap-4 ${i ? 'border-t border-black/10' : ''}`}
+                  className={`grid gap-1 px-4 py-3 sm:grid-cols-[18rem_1fr] sm:gap-4 ${i ? 'border-t border-sapin/10' : ''}`}
                 >
-                  <dt className="text-[12px] uppercase tracking-[0.08em] text-black/45">{label}</dt>
-                  <dd className="text-[14px] font-medium text-black">{valeur}</dd>
+                  <dt className="text-[12px] uppercase tracking-[0.08em] text-sapin/50">{label}</dt>
+                  <dd className="text-[15px] font-medium text-sapin">{valeur}</dd>
                 </div>
               ))}
             </dl>
 
-            <div className="mt-5 flex flex-col gap-2.5 text-[14px]">
-              <a href="tel:+32493083344" className="flex items-center gap-2 text-black transition-colors hover:text-gold-dark">
-                <Phone size={15} className="shrink-0 text-gold-dark" />
+            <div className="mt-5 flex flex-col gap-2.5 text-[15px]">
+              <a href="tel:+33679482492" className="flex items-center gap-2 text-sapin transition-colors hover:text-citron-dark">
+                <Phone size={15} className="shrink-0 text-citron-dark" />
                 {t.commun.telephone}
               </a>
-              <a href="mailto:info@vdhamenagements.be" className="flex items-center gap-2 text-black transition-colors hover:text-gold-dark">
-                <Mail size={15} className="shrink-0 text-gold-dark" />
-                info@vdhamenagements.be
+              <a href={`mailto:${MAIL}`} className="flex items-center gap-2 text-sapin transition-colors hover:text-citron-dark">
+                <Mail size={15} className="shrink-0 text-citron-dark" />
+                {MAIL}
               </a>
-              <span className="flex items-start gap-2 text-black/70">
-                <MapPin size={15} className="mt-0.5 shrink-0 text-gold-dark" />
-                {g.horairesValeur}
+              <span className="flex items-start gap-2 text-sapin/75">
+                <MapPin size={15} className="mt-1 shrink-0 text-citron-dark" />
+                {g.adresseValeur}
               </span>
             </div>
           </Bloc>
 
           <Bloc numero="02" titre={g.activitesTitre}>
             <p>{g.activitesTexte}</p>
-            <ul className="mt-2 space-y-1.5">
-              {g.activitesListe.map((a) => (
-                <li key={a} className="flex gap-2.5">
-                  <span aria-hidden className="mt-[0.6em] h-[3px] w-[3px] shrink-0 rounded-full bg-gold-dark" />
-                  {a}
-                </li>
-              ))}
-            </ul>
-            <p className="mt-4">
-              {g.activitesSuite}{' '}
-              <a href="https://kbopub.economie.fgov.be/kbopub/zoeknummerform.html" target="_blank" rel="noopener noreferrer" className={A}>
-                {g.activitesLien}
-              </a>{' '}
-              {g.activitesFin}
-            </p>
+            <p>{g.activitesSuite}</p>
           </Bloc>
 
           <Bloc numero="03" titre={g.assurancesTitre}>
             <p>{g.assurances1}</p>
-            <p>{g.assurances2}</p>
           </Bloc>
 
           <Bloc numero="04" titre={g.hebergementTitre}>
             <p>
-              {g.hebergementTexte} <strong className="font-medium text-black">Vercel Inc.</strong>, 440 N Barranca Ave #4133,
-              Covina, CA 91723, USA —{' '}
+              {g.hebergementTexte} <strong className="font-medium text-sapin">Vercel Inc.</strong>, 440 N Barranca Ave #4133,
+              Covina, CA 91723, États-Unis —{' '}
               <a href="https://vercel.com" target="_blank" rel="noopener noreferrer" className={A}>
                 vercel.com
               </a>.
@@ -149,14 +144,14 @@ export default function MentionsLegales() {
             <p>{g.donnees2}</p>
             <p>
               {g.donnees3}{' '}
-              <a href="mailto:info@vdhamenagements.be?subject=RGPD" className={A}>
-                info@vdhamenagements.be
+              <a href={`mailto:${MAIL}?subject=RGPD`} className={A}>
+                {MAIL}
               </a>.
             </p>
             <p>
               {g.donnees4}{' '}
-              <a href="https://www.autoriteprotectiondonnees.be" target="_blank" rel="noopener noreferrer" className={A}>
-                autoriteprotectiondonnees.be
+              <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer" className={A}>
+                cnil.fr
               </a>.
             </p>
           </Bloc>
@@ -169,11 +164,7 @@ export default function MentionsLegales() {
           <Bloc numero="08" titre={g.litigesTitre}>
             <p>{g.litiges1}</p>
             <p>
-              {g.litiges2}{' '}
-              <a href="https://mediationconsommateur.be" target="_blank" rel="noopener noreferrer" className={A}>
-                mediationconsommateur.be
-              </a>{' '}
-              — tél. 02 702 52 20.
+              {g.litiges2} {MEDIATEUR || <Blanc className="w-64" />}
             </p>
             <p>{g.litiges3}</p>
           </Bloc>
@@ -184,11 +175,11 @@ export default function MentionsLegales() {
           </Bloc>
         </div>
 
-        <footer className="border-t border-black/10 pt-8">
-          <p className="text-[12px] text-black/45">{g.maj}</p>
+        <footer className="border-t border-sapin/10 pt-8">
+          <p className="text-[13px] text-sapin/50">{g.maj}</p>
           <a
-            href={RACINE[l]}
-            className="mt-6 inline-flex items-center gap-2 rounded-full bg-black px-5 py-2.5 text-[12px] font-medium uppercase tracking-[0.07em] text-white transition-colors hover:bg-black/80"
+            href="/"
+            className="mt-6 inline-flex items-center gap-2 rounded-full bg-sapin px-5 py-2.5 text-[12px] font-medium uppercase tracking-[0.07em] text-citron transition-colors hover:bg-sapin-deep"
           >
             <ArrowLeft size={14} />
             {t.commun.retourSite}

@@ -1,169 +1,155 @@
-// Référence française. Les deux autres langues (textes-nl.ts, textes-en.ts)
-// reprennent exactement cette structure — TypeScript le vérifie via `Textes`.
-// Les clés de photos correspondent à `CLE` dans familles.ts.
+// Dictionnaire du site (français). Les composants le lisent via T().
+// Les clés de photos correspondent à celles de familles.ts.
+//
+// Données du client relevées le 06/10/2026 : fiche Google, clement-vertdemain.com,
+// répertoire SIRENE. Ne rien ajouter qui ne soit vérifiable (années d'expérience,
+// nombre de clients, avis) sans confirmation de Clément.
 
 import { FR_B } from './textes-fr-b';
 
 const FR_A = {
   meta: {
-    titre: 'VDH Construct — Pavage, terrasse et maçonnerie à Engis',
+    titre: 'Vert Demain — Jardinier paysagiste à Brunoy (91)',
     description:
-      'Aménagements extérieurs à Engis, Flémalle et Seraing : pavage, terrasses, maçonnerie, clôtures, parterres et entretien de jardin. Devis gratuit après visite sur place.',
+      'Jardinier paysagiste à Brunoy : contrat d’entretien annuel, tonte, taille de haies et création de jardins à Yerres, Montgeron, Épinay-sous-Sénart et alentours. Devis gratuit.',
   },
 
   commun: {
     devisGratuit: 'Devis gratuit',
-    voirRealisations: 'Voir nos réalisations',
-    telephone: '+32 493 08 33 44',
+    voirRealisations: 'Voir les réalisations',
+    telephone: '06 79 48 24 92',
     fermer: 'Fermer',
     precedente: 'Photo précédente',
     suivante: 'Photo suivante',
     agrandir: 'Agrandir',
     retourSite: 'Retour au site',
-    changerLangue: 'Changer de langue',
+    photoAVenir: 'Photo à venir',
+    videoAVenir: 'Vidéo à venir',
   },
 
   nav: {
     savoirFaire: 'Savoir-faire',
-    services: 'Services',
+    services: 'Prestations',
     realisations: 'Réalisations',
     faq: 'FAQ',
     ouvrirMenu: 'Ouvrir le menu',
   },
 
   hero: {
-    mots: ['Pavage', 'Terrasse', 'Maçonnerie'],
+    mots: ['Tonte', 'Taille', 'Création'],
     baseline:
-      'Aménagements extérieurs à Engis, Flémalle et Seraing. Devis gratuit après visite sur place, du lundi au samedi.',
+      'Jardinier paysagiste à Brunoy. Entretien à l’année, taille de haies et création de jardins, pour les particuliers comme pour les entreprises.',
     defiler: 'Défiler',
-    garanties: 'Visite sur place · Sans engagement · Dans 20 km autour d’Engis',
+    garanties: 'Devis gratuit · Crédit d’impôt de 50 % sur l’entretien · Brunoy et alentours',
   },
 
   features: {
-    titre: 'De la petite intervention à l’aménagement complet de votre extérieur',
+    titre: 'Du coup de tondeuse à la création complète de votre jardin',
     texte:
-      'Entretien, pavage, terrasses, clôtures et maçonnerie : un seul artisan pour tout l’extérieur, à Engis et dans un rayon de 20 km.',
+      'Tonte, taille, désherbage, élagage et aménagement paysager : un seul jardinier pour tout votre extérieur, à Brunoy et dans les villes voisines.',
     demanderDevis: 'Demander un devis',
   },
 
   stage: {
-    services: ['/ PAVAGE & TERRASSE', '/ MAÇONNERIE DE JARDIN', '/ TERRASSEMENT & ENTRETIEN', '/ CLÔTURES & PORTAILS'],
-    badgeZone: 'Engis · Flémalle · Seraing',
-    phrase1:
-      'Nous posons des extérieurs qui traversent les hivers. Tout le soin est dans la préparation, avant la première dalle.',
-    titre1: 'Terrassé. Posé.',
-    titre1Accent: 'Fini.',
-    carteTitre: 'Parlons de votre extérieur',
-    carteSous: 'VDH Construct — Engis',
-    carteCta: 'Visite gratuite sur place',
-    badge2: 'Maçonnerie & gros œuvre',
+    services: ['/ ENTRETIEN SAISONNIER', '/ TAILLE DE HAIES & ARBUSTES', '/ AMÉNAGEMENT PAYSAGER', '/ CONTRAT ANNUEL'],
+    badgeZone: 'Brunoy · Yerres · Montgeron',
+    // Sa propre accroche, reprise de son site.
+    phrase1: 'Parce que chaque jardin mérite du sens, pas juste de l’entretien.',
+    titre1: 'Pensé. Taillé.',
+    titre1Accent: 'Entretenu.',
+    carteTitre: 'Parlons de votre jardin',
+    carteSous: 'Vert Demain — Brunoy',
+    carteCta: 'Devis gratuit',
+    badge2: 'Contrat d’entretien annuel',
     phrase2:
-      'Un extérieur qui tient se décide sous la surface : décaissement, empierrement, pente d’évacuation.',
-    titre2: 'Fait pour',
-    titre2Accent: 'durer.',
+      'Un jardin soigné en toute saison, sans avoir à y penser : la fréquence, les prestations et le planning sont fixés ensemble.',
+    titre2: 'Toute',
+    titre2Accent: 'l’année.',
     texte2:
-      'Du premier coup de pelle à la dernière bordure, VDH Construct transforme un terrain en espace de vie : proprement, étape par étape.',
-    voirLes: 'Voir les',
-    realisationsMot: 'réalisations',
-    capacites: [
-      'Décaissement, empierrement et pente d’évacuation : le support qui empêche une terrasse de bouger.',
-      'Pavés, dalles et pierre bleue, bordures et allées de garage, posés sur une fondation stabilisée.',
-      'Murs de soutènement, abris de jardin, piliers, rejointoyage et travaux de béton.',
-      'Grillage rigide, panneaux occultants, clôtures bois et portails, sur poteaux scellés d’aplomb.',
+      'Le contrat annuel est la formule la plus simple : un suivi régulier par le même jardinier, qui connaît votre terrain et anticipe ce que chaque saison demande.',
+    // Calendrier type d'un contrat d'entretien. Repères horticoles généraux,
+    // à ajuster avec Clément selon ce qu'il propose réellement.
+    saisons: [
+      {
+        num: '01',
+        titre: 'Printemps',
+        texte: 'Reprise des tontes, nettoyage et désherbage des massifs, plantations de saison.',
+      },
+      {
+        num: '02',
+        titre: 'Été',
+        texte: 'Tontes régulières, désherbage, taille légère des haies et des arbustes.',
+      },
+      {
+        num: '03',
+        titre: 'Automne',
+        texte: 'Grande taille des haies, ramassage des feuilles, plantation d’arbres et d’arbustes.',
+      },
+      {
+        num: '04',
+        titre: 'Hiver',
+        texte: 'Élagage des arbres au repos, nettoyage et remise en état du jardin avant le printemps.',
+      },
     ],
+    voirContrat: 'Demander un contrat',
   },
 
   realisations: {
-    kicker: 'Sélection de projets',
+    kicker: 'Quelques jardins récents',
     titre: 'Réalisations',
     intro:
-      'Quarante chantiers menés autour d’Engis, rangés en quatre métiers. Cliquez sur une famille : les photos s’ouvrent aussitôt.',
+      'Trois métiers, un même soin du détail. Cliquez sur une famille : les photos s’ouvrent aussitôt.',
     voirPhotos: 'Voir les {n} photos',
     photos: 'photos',
     famille: 'Famille',
     fermerGalerie: 'Fermer les réalisations',
     familles: {
-      terrassement: {
-        titre: 'Terrassement\n& drainage',
-        intro: 'Le support qui empêche tout le reste de bouger',
+      entretien: {
+        titre: 'Entretien\nsaisonnier',
+        intro: 'Tonte, désherbage, massifs',
         resume:
-          'Décaissement, empierrement et pente d’évacuation. Allées carrossables, cours en gravier et dalles alvéolées posées sur un fond stabilisé.',
+          'Chaque saison a ses besoins. L’entretien régulier préserve la santé des végétaux et garde le jardin net toute l’année, en contrat annuel ou en intervention ponctuelle.',
       },
-      pavage: {
-        titre: 'Pavage\n& dallage',
-        intro: 'Terrasses, allées et abords',
+      taille: {
+        titre: 'Taille de haies\n& arbustes',
+        intro: 'Haies, arbustes, topiaires',
         resume:
-          'Pierre naturelle, klinkers et pavés anciens, posés sur fondation avec bordures et niveaux tenus. Terrasses, entrées et abords de façade.',
+          'Des coupes nettes et régulières, adaptées à chaque végétal, pour structurer le jardin et favoriser une croissance dense et harmonieuse.',
       },
-      maconnerie: {
-        titre: 'Maçonnerie\nde jardin',
-        intro: 'Murs, piliers et ouvrages maçonnés',
+      creation: {
+        titre: 'Aménagement\n& création',
+        intro: 'Massifs, pelouse, allées',
         resume:
-          'Murets de soutènement et murs bahut en pierre, brique ou blocs, couvre-murs en pierre bleue, piliers, escaliers et barbecues maçonnés.',
-      },
-      clotures: {
-        titre: 'Clôtures\n& portails',
-        intro: 'Délimiter, fermer, masquer',
-        resume:
-          'Grillage rigide, panneaux occultants, clôtures bois et portails, posés d’aplomb sur poteaux scellés. Du jardin privatif au site industriel.',
+          'Créer ou réaménager un jardin en tenant compte du terrain, de vos envies et de votre budget : plantations, pelouse en rouleaux, allées et bordures.',
       },
     },
     photosTextes: {
-      'double-bande-roulement': { titre: 'Double bande de roulement', alt: 'Allée en gravier avec deux bandes de dalles alvéolées blanches' },
-      'allee-dalles-alveolees': { titre: 'Allée en dalles alvéolées', alt: 'Allée en gravier renforcée d’une bande de dalles alvéolées' },
-      'entree-garage-alveoles': { titre: 'Entrée de garage', alt: 'Entrée de garage en gravier et dalles alvéolées devant une maison en brique' },
-      'acces-carrossable-gravier': { titre: 'Accès carrossable', alt: 'Accès carrossable en gravier bordé de haies' },
-      'cour-gravier-dore': { titre: 'Cour en gravier doré', alt: 'Cour en gravier doré bordée de pavés devant un garage' },
-      'cour-gravier-stabilise': { titre: 'Cour en gravier stabilisé', alt: 'Cour en gravier stabilisé devant une porte de garage' },
-      'allee-gravier-pavee': { titre: 'Allée gravier et pavés', alt: 'Accès mêlant gravier et pavés devant un garage blanc' },
-      'acces-gravier-portail': { titre: 'Accès et portail', alt: 'Cour gravillonnée devant un garage et un portail bleu' },
-      'allee-gravier-noir': { titre: 'Allée en gravier noir', alt: 'Allée en gravier noir bordée de béton le long d’une maison' },
-      'allee-technique-gravier': { titre: 'Allée technique', alt: 'Allée de service en gravier le long d’un bâtiment' },
-      'terrasse-pierre-naturelle': { titre: 'Terrasse en pierre naturelle', alt: 'Terrasse en dalles de pierre naturelle irrégulière le long d’une maison blanche' },
-      'cour-paves-ronds': { titre: 'Cour en pavés', alt: 'Cour pavée de klinkers devant une maison en brique' },
-      'pavage-ancien-entree': { titre: 'Pavage à l’ancienne', alt: 'Pavage en pavés anciens devant une entrée en brique' },
-      'allee-pavee-facade': { titre: 'Allée pavée en façade', alt: 'Allée pavée longeant la façade en brique d’une maison' },
-      'pavage-long-facade': { titre: 'Pavage de façade', alt: 'Bande pavée en klinkers le long d’un mur en brique' },
-      'acces-pave-gravier': { titre: 'Accès pavé', alt: 'Accès pavé bordé de gravier le long d’une maison en brique' },
-      'entree-pavee-portail': { titre: 'Entrée pavée', alt: 'Entrée pavée devant un portail bleu avec boîte aux lettres' },
-      'bordure-pavee-galets': { titre: 'Bordure pavée et galets', alt: 'Bordure pavée séparant un lit de galets blancs d’un massif planté' },
-      'terrasse-opus-incertum': { titre: 'Terrasse en opus incertum', alt: 'Terrasse en dalles de pierre irrégulières devant une baie vitrée' },
-      'muret-courbe-pierre': { titre: 'Muret courbe en pierre', alt: 'Muret courbe en pierre naturelle entourant une pelouse' },
-      'muret-soutenement-pierre': { titre: 'Muret de soutènement', alt: 'Muret de soutènement en pierre naturelle retenant un parterre planté' },
-      'muret-pierre-couvre-mur': { titre: 'Muret et couvre-mur', alt: 'Muret en pierre naturelle surmonté d’un couvre-mur' },
-      'muret-garde-corps': { titre: 'Muret et garde-corps', alt: 'Muret en pierre surmonté d’un garde-corps en fer forgé' },
-      'muret-brique-escalier': { titre: 'Muret et escalier', alt: 'Muret en brique courbe accompagné d’un escalier en béton' },
-      'muret-brique-trottoir': { titre: 'Muret en brique', alt: 'Muret en brique le long d’un trottoir devant une haie taillée' },
-      'muret-brique-couvre-mur': { titre: 'Muret brique et couvre-mur', alt: 'Muret en brique avec couvre-mur béton bordant un massif' },
-      'muret-pierre-reconstituee': { titre: 'Muret en pierre reconstituée', alt: 'Muret en blocs de pierre reconstituée retenant un talus' },
-      'muret-pierre-jardin': { titre: 'Muret de jardin', alt: 'Muret en pierre naturelle dans un jardin avec barrière en bois' },
-      'barbecue-maconne': { titre: 'Barbecue maçonné', alt: 'Barbecue maçonné en blocs et brique avec grille et plan de travail' },
-      'pilier-maconne': { titre: 'Pilier maçonné', alt: 'Pilier maçonné en blocs couronné de brique' },
-      'cloture-bois-noire': { titre: 'Clôture bois noire', alt: 'Clôture en bois peinte en noir avec portillon devant une terrasse dallée' },
-      'grillage-prairie': { titre: 'Clôture de prairie', alt: 'Clôture en grillage rigide vert bordant une prairie' },
-      'cloture-portail-vert': { titre: 'Clôture et portail', alt: 'Clôture en grillage rigide vert avec portail en limite de terrain' },
-      'grillage-vert-terrain': { titre: 'Grillage rigide', alt: 'Clôture en grillage rigide vert le long d’un terrain' },
-      'cloture-portillon-jardin': { titre: 'Clôture et portillon', alt: 'Clôture en grillage rigide vert avec portillon dans un jardin' },
-      'occultant-gris-cour': { titre: 'Panneaux occultants', alt: 'Clôture en panneaux occultants gris bordant une cour bétonnée' },
-      'occultant-gris-gravier': { titre: 'Brise-vue sur cour', alt: 'Clôture occultante grise le long d’une cour en gravier' },
-      'cloture-noire-batiment': { titre: 'Clôture noire', alt: 'Clôture noire devant un bâtiment industriel' },
-      'cloture-industrielle': { titre: 'Clôture industrielle', alt: 'Clôture grillagée autour d’une installation industrielle' },
-      'grillage-vert-industriel': { titre: 'Grillage de site', alt: 'Clôture en grillage rigide vert sur un site industriel' },
+      'jardin-cerisier-fleurs': { titre: 'Jardin au printemps', alt: 'Pelouse fraîchement tondue devant un cerisier à fleurs doubles en floraison' },
+      'jardin-anglais-meuliere': { titre: 'Jardin à l’anglaise', alt: 'Jardin à l’anglaise avec pelouse et massifs devant une maison en meulière' },
+      'clement-arrosage-massif': { titre: 'Massif au pied d’un arbre', alt: 'Clément arrose un massif paillé cerclé de bordure au pied d’un grand arbre' },
+      'taille-haie-perche': { titre: 'Taille de haie', alt: 'Taille d’une haie dense au taille-haie sur perche, au-dessus d’une allée' },
+      'topiaire-conifere': { titre: 'Conifère en topiaire', alt: 'Conifère taillé en forme ovale le long d’une maison, pas japonais au sol' },
+      'jasmin-arche-apres': { titre: 'Arche de faux jasmin', alt: 'Arche de faux jasmin taillée au-dessus d’une allée en briques' },
+      'palmiers-pelouse-rouleaux': { titre: 'Palmiers et pelouse en rouleaux', alt: 'Massif ovale en pelouse en rouleaux planté de palmiers, bordure béton' },
+      'massif-palmiers-humilis': { titre: 'Plantation de palmiers nains', alt: 'Palmiers nains plantés dans une pelouse neuve cerclée de paillage minéral' },
+      'massif-magnolia-pelouse': { titre: 'Massif engazonné', alt: 'Massif ovale engazonné planté d’un jeune arbre devant une clôture grise' },
+      'allee-gravillons-apres': { titre: 'Allée en gravillons', alt: 'Allée en gravillons blancs le long d’une maison contemporaine grise' },
     },
   },
 
   chantier: {
-    kicker: 'Cinq chantiers, filmés au téléphone',
-    titre: 'Brut',
-    titreAccent: 'de chantier',
+    kicker: 'Au jardin, filmé au téléphone',
+    titre: 'Sur',
+    titreAccent: 'le terrain',
     intro:
-      'Ni plan de coupe, ni mise en scène. Ce qu’on voit en arrivant sur le chantier — et ce qu’on laisse en partant.',
+      'Ni mise en scène ni drone : ce qu’on voit en arrivant dans le jardin, et ce qu’on laisse en repartant.',
+    // Emplacements vides : titres et vidéos à reprendre des fichiers TikTok du client.
     clips: [
-      { titre: 'Le point de départ', detail: 'Une cour fermée, murs usés et sol nu. C’est là que tout commence.' },
-      { titre: 'L’annexe sort de terre', detail: 'Dalle coulée, blocs montés d’aplomb, ouvertures réservées.' },
-      { titre: 'Clôture au cordeau', detail: 'Poteaux scellés et panneaux alignés sur toute la limite du jardin.' },
-      { titre: 'Muret brique sur rue', detail: 'Brique, couvre-mur et lit de galets, en façade sur le trottoir.' },
-      { titre: 'La cour reprend forme', detail: 'Du fond stabilisé aux dernières coupes de pavés, contre la façade.' },
+      { titre: '', detail: '' },
+      { titre: '', detail: '' },
+      { titre: '', detail: '' },
+      { titre: '', detail: '' },
+      { titre: '', detail: '' },
     ],
   },
 
@@ -172,38 +158,26 @@ const FR_A = {
     titre: 'Ce qu’il y avait',
     titreAccent: 'à la place.',
     intro:
-      'Quatre chantiers dont nous avons gardé la photo de départ. Chaque carte se pose au centre de l’écran, puis l’état d’origine s’efface au profit du résultat.',
+      'Deux jardins dont j’ai gardé la photo de départ. Chaque carte se pose au centre de l’écran, puis l’état d’origine s’efface au profit du résultat.',
     avant: 'Avant',
     apres: 'Après',
-    cta: 'Montrez-nous votre « avant »',
+    cta: 'Montrez-moi votre « avant »',
+    // Paires vérifiées sur un détail fixe. La 3e paire du site Wix (palmiers) a été
+    // écartée : la photo « avant » montre un autre massif, déjà engazonné.
     paires: [
       {
-        titre: 'Allée en pierre naturelle',
-        lieu: 'Abords de maison',
+        titre: 'Allée en gravillons',
+        lieu: 'Passage le long de la maison',
         detail:
-          'Les anciennes dalles se déchaussaient et les joints étaient pris par la mousse. Décaissement, fondation, puis pose de dalles de pierre naturelle avec une pente d’évacuation vers la pelouse.',
-        repere: 'Même mur en brique peinte, même retour de pelouse à gauche.',
+          'Une bande de terrain envahie par les herbes et les arbustes, le long de la façade. Débroussaillage, nettoyage, puis pose de gravillons blancs : le passage est dégagé et propre.',
+        repere: 'Même façade grise à bandeau vitré, même grillage vert à gauche.',
       },
       {
-        titre: 'Passage technique',
-        lieu: 'Site industriel',
+        titre: 'Arche de faux jasmin',
+        lieu: 'Entrée de jardin',
         detail:
-          'Un couloir de service entre deux bâtiments, rendu impraticable par la végétation. Débroussaillage, géotextile et empierrement : le passage reste propre et l’eau s’évacue.',
-        repere: 'Même descente d’eau coudée, même bardage métallique.',
-      },
-      {
-        titre: 'Muret et parterre',
-        lieu: 'Jardin en pente',
-        detail:
-          'Un talus qui s’effondrait sur le chemin. Muret de soutènement en brique, couvre-mur posé d’aplomb, puis remise en terre et plantation du parterre au-dessus.',
-        repere: 'Mêmes dalles de couvre-mur, même haie taillée à l’arrière.',
-      },
-      {
-        titre: 'Clôture de site',
-        lieu: 'Limite de propriété',
-        detail:
-          'Une limite tenue par des barrières de chantier provisoires. Poteaux scellés et panneaux de grillage rigide posés au cordeau sur toute la longueur.',
-        repere: 'Même toiture courbe rouge et blanche, mêmes arbres au fond.',
+          'Un faux jasmin qui débordait sur le passage. Taille de l’arche pour lui rendre sa forme et dégager l’allée en briques.',
+        repere: 'Même arche, même allée en briques, même escalier au fond.',
       },
     ],
   },

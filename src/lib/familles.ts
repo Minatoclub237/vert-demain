@@ -1,96 +1,45 @@
-// Structure des familles de réalisations : uniquement ce qui NE dépend PAS de la langue
-// (slug, numéro, chemins d'images). Les titres et textes alternatifs vivent dans les
-// dictionnaires, sous `realisations.familles` et `realisations.photosTextes`.
+// Structure des familles de réalisations : uniquement ce qui n'est PAS du texte
+// (slug, numéro, fichiers). Titres et textes alternatifs vivent dans le dictionnaire,
+// sous `realisations.familles` et `realisations.photosTextes`.
+//
+// Photos actuelles : celles du site Wix du client (clement-vertdemain.com).
+// Les emplacements vides attendent les photos Instagram / TikTok.
 
-export type FamilleSlug = 'terrassement' | 'pavage' | 'maconnerie' | 'clotures';
+export type FamilleSlug = 'entretien' | 'taille' | 'creation';
 
 export type Famille = {
   slug: FamilleSlug;
   num: string;
   couverture: string;
-  /** Clés de photos, dans l'ordre d'affichage. Chaque clé = un fichier .webp. */
+  /** Clés de photos, dans l'ordre d'affichage. Chaque clé = /photos/<clé>.webp. */
   photos: string[];
 };
 
-const dossier: Record<FamilleSlug, string> = {
-  terrassement: '/realisations/terrassement/',
-  pavage: '/realisations/pavage/',
-  maconnerie: '/realisations/maconnerie/',
-  clotures: '/realisations/clotures/',
-};
+/** Emplacements vides ajoutés à la fin de chaque galerie, en attendant les photos. */
+export const EMPLACEMENTS_VIDES = 4;
 
 export const FAMILLES: Famille[] = [
   {
-    slug: 'terrassement',
+    slug: 'entretien',
     num: '01',
-    couverture: `${dossier.terrassement}double-bande-roulement.webp`,
-    photos: [
-      'double-bande-roulement',
-      'allee-dalles-alveolees',
-      'entree-garage-alveoles',
-      'acces-carrossable-gravier',
-      'cour-gravier-dore',
-      'cour-gravier-stabilise',
-      'allee-gravier-pavee',
-      'acces-gravier-portail',
-      'allee-gravier-noir',
-      'allee-technique-gravier',
-    ],
+    couverture: '/photos/jardin-cerisier-fleurs.webp',
+    photos: ['jardin-cerisier-fleurs', 'jardin-anglais-meuliere', 'clement-arrosage-massif'],
   },
   {
-    slug: 'pavage',
+    slug: 'taille',
     num: '02',
-    couverture: `${dossier.pavage}terrasse-pierre-naturelle.webp`,
-    photos: [
-      'terrasse-pierre-naturelle',
-      'cour-paves-ronds',
-      'pavage-ancien-entree',
-      'allee-pavee-facade',
-      'pavage-long-facade',
-      'acces-pave-gravier',
-      'entree-pavee-portail',
-      'bordure-pavee-galets',
-      'terrasse-opus-incertum',
-    ],
+    couverture: '/photos/taille-haie-perche.webp',
+    photos: ['taille-haie-perche', 'topiaire-conifere', 'jasmin-arche-apres'],
   },
   {
-    slug: 'maconnerie',
+    slug: 'creation',
     num: '03',
-    couverture: `${dossier.maconnerie}muret-courbe-pierre.webp`,
-    photos: [
-      'muret-courbe-pierre',
-      'muret-soutenement-pierre',
-      'muret-pierre-couvre-mur',
-      'muret-garde-corps',
-      'muret-brique-escalier',
-      'muret-brique-trottoir',
-      'muret-brique-couvre-mur',
-      'muret-pierre-reconstituee',
-      'muret-pierre-jardin',
-      'barbecue-maconne',
-      'pilier-maconne',
-    ],
-  },
-  {
-    slug: 'clotures',
-    num: '04',
-    couverture: `${dossier.clotures}cloture-bois-noire.webp`,
-    photos: [
-      'cloture-bois-noire',
-      'grillage-prairie',
-      'cloture-portail-vert',
-      'grillage-vert-terrain',
-      'cloture-portillon-jardin',
-      'occultant-gris-cour',
-      'occultant-gris-gravier',
-      'cloture-noire-batiment',
-      'cloture-industrielle',
-      'grillage-vert-industriel',
-    ],
+    couverture: '/photos/palmiers-pelouse-rouleaux.webp',
+    photos: ['palmiers-pelouse-rouleaux', 'massif-palmiers-humilis', 'massif-magnolia-pelouse', 'allee-gravillons-apres'],
   },
 ];
 
-/** Chemin du fichier d'une photo, à partir de sa famille et de sa clé. */
-export function cheminPhoto(slug: FamilleSlug, cle: string): string {
-  return `${dossier[slug]}${cle}.webp`;
+/** Chemin du fichier d'une photo, à partir de sa clé. */
+export function cheminPhoto(cle: string): string {
+  return `/photos/${cle}.webp`;
 }

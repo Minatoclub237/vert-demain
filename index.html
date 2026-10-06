@@ -1,26 +1,26 @@
 <!doctype html>
-<html lang="fr-BE">
+<html lang="fr-FR">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VDH Construct — Pavage, terrasse et maçonnerie à Engis</title>
-    <meta name="description" content="Aménagements extérieurs à Engis, Flémalle et Seraing : pavage, terrasses, maçonnerie, clôtures, parterres et entretien de jardin. Devis gratuit après visite sur place." />
-    <link rel="preload" as="image" href="/loader-3d.jpg" />
-    <link href="https://db.onlinewebfonts.com/c/08ae108e7fb1d31fd1311943f98055fe?family=TT+Octosquares+Trl+Cnd" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Vert Demain — Jardinier paysagiste à Brunoy (91)</title>
+    <meta name="description" content="Jardinier paysagiste à Brunoy : contrat d’entretien annuel, tonte, taille de haies et création de jardins à Yerres, Montgeron, Épinay-sous-Sénart et alentours. Devis gratuit." />
+    <meta name="theme-color" content="#133201" />
+    <link rel="preload" as="image" href="/logo-citron.svg" />
     <meta property="og:type" content="website">
-    <meta property="og:locale" content="fr_BE">
-    <meta property="og:site_name" content="VDH Construct">
-    <meta property="og:title" content="VDH Construct — Pavage, terrasse et maçonnerie à Engis">
-    <meta property="og:description" content="Aménagements extérieurs à Engis, Flémalle et Seraing. Devis gratuit après visite sur place.">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:site_name" content="Vert Demain">
+    <meta property="og:title" content="Vert Demain — Jardinier paysagiste à Brunoy">
+    <meta property="og:description" content="Contrat d’entretien annuel, taille de haies et création de jardins à Brunoy et alentours. Devis gratuit.">
     <meta property="og:image" content="/og.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="VDH Construct — Pavage, terrasse et maçonnerie à Engis">
-    <meta name="twitter:description" content="Aménagements extérieurs à Engis, Flémalle et Seraing. Devis gratuit après visite sur place.">
+    <meta name="twitter:title" content="Vert Demain — Jardinier paysagiste à Brunoy">
+    <meta name="twitter:description" content="Contrat d’entretien annuel, taille de haies et création de jardins à Brunoy et alentours. Devis gratuit.">
     <meta name="twitter:image" content="/og.jpg">
 
     <!-- Écran de chargement. Il vit dans le HTML et non dans React : sinon il
@@ -33,7 +33,7 @@
         inset: 0;
         z-index: 100;
         overflow: hidden;
-        background: #3b332a;
+        background: #133201;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -46,21 +46,10 @@
         opacity: 0;
         pointer-events: none;
       }
-      #app-loader .al-bg {
-        position: absolute;
-        inset: -5%;
-        width: 110%;
-        height: 110%;
-        object-fit: cover;
-        filter: blur(18px) brightness(0.55);
-      }
       #app-loader .al-mark {
         position: relative;
-        max-height: 70vmin;
-        max-width: 88vw;
-        width: auto;
-        border-radius: 2px;
-        box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.75);
+        width: min(22rem, 70vw);
+        height: auto;
       }
       #app-loader .al-bar {
         position: relative;
@@ -68,14 +57,14 @@
         height: 3px;
         border-radius: 999px;
         overflow: hidden;
-        background: rgba(255, 255, 255, 0.2);
+        background: rgba(191, 255, 86, 0.2);
       }
       #app-loader .al-bar i {
         display: block;
         width: 33%;
         height: 100%;
         border-radius: 999px;
-        background: rgba(255, 255, 255, 0.8);
+        background: #BFFF56;
         animation: al-sweep 1.1s ease-in-out infinite;
       }
       @keyframes al-sweep {
@@ -87,17 +76,12 @@
         #app-loader .al-bar i { width: 100%; animation: none; }
       }
     </style>
-    <link rel="canonical" href="https://vdh-construct.vercel.app/" />
-    <link rel="alternate" hreflang="fr-BE" href="https://vdh-construct.vercel.app/" />
-    <link rel="alternate" hreflang="nl-BE" href="https://vdh-construct.vercel.app/nl/" />
-    <link rel="alternate" hreflang="x-default" href="https://vdh-construct.vercel.app/" />
-    <meta property="og:locale:alternate" content="nl_BE">
+    <!-- TODO : canonical et og:url à poser quand le domaine de production sera connu. -->
 
 </head>
   <body>
-    <div id="app-loader" role="status" aria-label="Chargement du site VDH Construct">
-      <img class="al-bg" src="/loader-3d.jpg" alt="" aria-hidden="true" />
-      <img class="al-mark" src="/loader-3d.jpg" alt="VDH Construct &amp; Aménagements Extérieurs" />
+    <div id="app-loader" role="status" aria-label="Chargement du site Vert Demain">
+      <img class="al-mark" src="/logo-citron.svg" alt="Vert Demain" />
       <div class="al-bar"><i></i></div>
     </div>
 
