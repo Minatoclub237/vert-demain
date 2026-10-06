@@ -1,0 +1,133 @@
+import Marquee from '@/components/Marquee';
+import { useInView } from '@/components/scroll/Reveal';
+import { T, lien } from '@/lib/i18n';
+
+
+// Les libellés viennent du dictionnaire ; seuls les ancres restent ici.
+const NAV_LINKS = [
+  { cle: 'savoirFaire', href: '#solutions' },
+  { cle: 'services', href: '#secteurs' },
+  { cle: 'realisations', href: '#realisations' },
+  { cle: 'faq', href: '#faq' },
+] as const;
+
+export default function Features() {
+  const t = T();
+  const { ref, inView } = useInView<HTMLElement>();
+  const anim = (cls: string) => (inView ? cls : 'opacity-0');
+
+  return (
+    <section id="secteurs" ref={ref} className="relative min-h-screen w-full bg-white font-inter p-2 sm:p-3">
+      <div
+        className={`relative border border-neutral-200 rounded-sm p-1 sm:p-1 min-h-[calc(100vh-1rem)] sm:min-h-[calc(100vh-1.5rem)] ${anim(
+          'animate-border-draw'
+        )}`}
+        style={{ animationDelay: '100ms' }}
+      >
+        <div className={`absolute -top-0.5 -left-0.5 w-1 h-1 bg-dark ${anim('animate-fade-in')}`} style={{ animationDelay: '500ms' }} />
+        <div className={`absolute -top-0.5 -right-0.5 w-1 h-1 bg-dark ${anim('animate-fade-in')}`} style={{ animationDelay: '600ms' }} />
+        <div className={`absolute -bottom-0.5 -left-0.5 w-1 h-1 bg-dark ${anim('animate-fade-in')}`} style={{ animationDelay: '700ms' }} />
+        <div className={`absolute -bottom-0.5 -right-0.5 w-1 h-1 bg-dark ${anim('animate-fade-in')}`} style={{ animationDelay: '800ms' }} />
+
+        <div
+          className={`border border-dashed border-neutral-200 rounded-sm flex flex-col min-h-[calc(100vh-2rem)] sm:min-h-[calc(100vh-2.5rem)] ${anim(
+            'animate-border-draw'
+          )}`}
+          style={{ animationDelay: '200ms' }}
+        >
+          <nav className="relative z-30 flex items-center justify-between px-5 sm:px-8 lg:px-12 border-b border-dashed border-neutral-200 min-h-[4rem] sm:min-h-[5.5rem]">
+            <div className={`flex items-center gap-2 sm:gap-3 ${anim('animate-fade-up')}`} style={{ animationDelay: '350ms' }}>
+              <LogoMark />
+              <span className="font-octosquares font-medium text-lg sm:text-[22px] text-black tracking-tight">
+                VDH Construct
+              </span>
+            </div>
+
+            <div className="hidden md:flex items-center gap-1">
+              {NAV_LINKS.map((link, i) => (
+                <a
+                  key={t.nav[link.cle]}
+                  href={lien(link.href)}
+                  className={`px-5 py-2.5 bg-black/5 rounded-sm text-[13px] font-medium uppercase tracking-[0.07em] text-black hover:bg-black/10 transition-colors ${anim(
+                    'animate-fade-up'
+                  )}`}
+                  style={{ animationDelay: `${450 + i * 70}ms` }}
+                >
+                  {t.nav[link.cle]}
+                </a>
+              ))}
+            </div>
+
+            <a
+              href={lien('#contact')}
+              className={`hidden md:inline-flex px-6 py-3.5 bg-dark rounded-sm text-white text-[13px] font-medium uppercase tracking-[0.07em] hover:bg-black transition-colors ${anim(
+                'animate-fade-up'
+              )}`}
+              style={{ animationDelay: '750ms' }}
+            >
+              {t.commun.devisGratuit}
+            </a>
+          </nav>
+
+          <div className="flex-1 flex flex-col px-5 sm:px-8 lg:px-12 py-8 sm:py-10 lg:py-14">
+            <h2
+              className={`font-octosquares font-bold text-black uppercase leading-[1.05] text-center text-[clamp(1.4rem,4.5vw,3.2rem)] max-w-[48rem] mx-auto ${anim(
+                'animate-fade-up'
+              )}`}
+              style={{ animationDelay: '500ms' }}
+            >
+              {t.features.titre}
+            </h2>
+
+            <div className="-mx-5 sm:-mx-8 lg:-mx-12 mt-6 sm:mt-8">
+              <Marquee />
+            </div>
+
+            <p
+              className={`mt-8 sm:mt-10 lg:mt-12 text-center text-black text-[10px] sm:text-[11px] font-semibold uppercase leading-[1.6] tracking-[0.05em] max-w-[26rem] mx-auto pb-4 ${anim(
+                'animate-fade-up'
+              )}`}
+              style={{ animationDelay: '1100ms' }}
+            >
+              {t.features.texte}
+            </p>
+
+            <div
+              className={`mt-6 sm:mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 ${anim(
+                'animate-fade-up'
+              )}`}
+              style={{ animationDelay: '1200ms' }}
+            >
+              <a
+                href={lien('#contact')}
+                className="text-black text-[11px] font-semibold uppercase tracking-[0.05em] underline underline-offset-4 decoration-neutral-400 hover:decoration-neutral-900 transition-colors"
+              >
+                {t.features.demanderDevis}
+              </a>
+              <a
+                href={lien('#realisations')}
+                className="text-black text-[11px] font-semibold uppercase tracking-[0.05em] underline underline-offset-4 decoration-neutral-400 hover:decoration-neutral-900 transition-colors"
+              >
+                {t.commun.voirRealisations}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function LogoMark() {
+  // Variante detouree sur fond blanc, pour la section blanche.
+  return (
+    <img
+      src="/logo-vdh-white.webp"
+      alt="VDH Construct & Aménagements Extérieurs"
+      width={48}
+      height={48}
+      className="h-9 w-9 sm:h-12 sm:w-12 flex-shrink-0 select-none"
+      draggable={false}
+    />
+  );
+}
