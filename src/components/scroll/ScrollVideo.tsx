@@ -1,7 +1,8 @@
-// Fond de la scène qui défile. Emplacement vidéo vide : à reprendre d'une vidéo du
-// client (TikTok / Instagram). Tant que SRC est vide, un dégradé vert sapin le remplace.
-const SRC = '';
-const POSTER = '';
+// Fond de la scène qui défile : triptyque « avant · pendant · après » monté à partir
+// d'une vidéo du client (3 panneaux verticaux, boucle de 14 s, muette).
+// Si SRC est vidé, un dégradé vert sapin prend le relais.
+const SRC = '/video/fond-triptyque.mp4';
+const POSTER = '/video/fond-poster.jpg';
 
 export default function ScrollVideo() {
   return (

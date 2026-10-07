@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { ChevronDown, Menu, Phone, X } from 'lucide-react';
 import { T, lien } from '@/lib/i18n';
-import Vide from '@/components/ui/Vide';
 
 // Les libellés viennent du dictionnaire ; seuls les ancres restent ici.
 const NAV_LINKS = [
@@ -163,8 +162,20 @@ export default function Hero({ onAdvance }: { onAdvance: () => void }) {
             className="flex min-h-0 overflow-hidden border-t lg:border-t-0 lg:border-l border-dashed border-citron-dark p-2 animate-scale-in lg:col-start-2 lg:row-start-1 lg:row-span-3"
             style={{ animationDelay: '600ms' }}
           >
-            {/* Emplacement de la vidéo d'accueil : à reprendre d'un TikTok du client. */}
-            <Vide type="video" label={t.commun.videoAVenir} ton="clair" className="w-full h-full min-h-[14rem] rounded-sm" />
+            {/* Montage de 7 plans tirés d'une vidéo du client (boucle de 12,5 s, muette).
+                Montage reproductible : scripts/montage-videos.cjs. */}
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              poster="/video/hero-poster.jpg"
+              aria-hidden
+              className="w-full h-full min-h-[14rem] object-cover rounded-sm"
+            >
+              <source src="/video/hero-vert-demain.mp4" type="video/mp4" />
+            </video>
           </div>
 
           {/* En mobile ces boutons passent sous la vidéo ; en lg ils reviennent
