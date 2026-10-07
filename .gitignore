@@ -2,3 +2,6 @@ node_modules
 dist
 .DS_Store
 *.local
+
+# Vidéos sources des montages (286 Mo) : gardées en local, pas sur GitHub
+medias-sources/
