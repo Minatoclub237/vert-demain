@@ -6,6 +6,7 @@ import Realisations from '@/components/Realisations';
 import ChantierVideo from '@/components/ChantierVideo';
 import AvantApres from '@/components/AvantApres';
 import ApresVente from '@/components/ApresVente';
+import Avis from '@/components/Avis';
 import Faq from '@/components/Faq';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
@@ -93,6 +94,8 @@ export default function App() {
       <AvantApres />
 
       <ApresVente />
+
+      <Avis />
 
       <Faq />
 

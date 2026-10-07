@@ -39,11 +39,17 @@ function donneesStructurees(): Plugin {
           addressRegion: 'Essonne',
           addressCountry: 'FR',
         },
+        // Horaires de la fiche Google (relevés le 07/10/2026)
+        openingHoursSpecification: [
+          { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '08:00', closes: '17:30' },
+          { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Saturday', opens: '08:00', closes: '12:30' },
+        ],
         areaServed: villes.map((name) => ({ '@type': 'City', name })),
         knowsAbout: FR.contact.projets.filter((p) => p !== 'Autre demande'),
         sameAs: [
           'https://www.instagram.com/clement_vertdemain/',
           'https://www.tiktok.com/@vertdemain',
+          'https://fr.linkedin.com/in/clementlasfont',
           'https://www.google.com/maps?cid=1318388340206876737',
         ],
       },

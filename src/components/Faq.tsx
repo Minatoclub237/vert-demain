@@ -38,7 +38,7 @@ const CANAUX: Record<CategoryKey, { canal: Canal; ancre?: string }[]> = {
   ],
   garanties: [
     { canal: 'tel' },
-    { canal: 'page', ancre: '#realisations' },
+    { canal: 'page', ancre: '#avis' },
     { canal: 'mail' },
     { canal: 'page', ancre: '#contact' },
     { canal: 'mail' },

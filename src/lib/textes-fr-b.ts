@@ -2,6 +2,19 @@
 // Séparé de textes-fr.ts uniquement pour garder des fichiers lisibles.
 
 export const FR_B = {
+  avis: {
+    kicker: 'Avis Google',
+    titre: 'Ce qu’ils en',
+    titreAccent: 'disent.',
+    intro:
+      'Des clients de Brunoy et des environs, sur la fiche Google de Vert Demain. Avis recopiés tels quels.',
+    note: '5,0',
+    noteLegende: 'Note moyenne sur Google',
+    voirFiche: 'Voir tous les avis sur Google',
+    lireSuite: 'Lire la suite sur Google',
+    etoiles: '5 étoiles sur 5',
+  },
+
   faq: {
     kicker: 'Questions fréquentes',
     titre: 'Ce qu’on me demande',
@@ -85,9 +98,9 @@ export const FR_B = {
           cta: 'Appeler Clément',
         },
         {
-          q: 'On trouve peu d’avis sur vous en ligne.',
-          a: 'C’est exact : l’activité est récente. La fiche Google affiche pour l’instant une note de 5 sur 5. Le plus parlant reste le travail lui-même : vous pouvez voir des avant / après sur cette page, et d’autres jardins sur Instagram.',
-          cta: 'Voir les réalisations',
+          q: 'Qu’en disent vos clients ?',
+          a: 'Ils l’écrivent sur Google, où la fiche de Vert Demain affiche une note de 5 sur 5 : un terrain vague transformé en jardin, des jardins remis en état après des travaux, la taille avant l’hiver. Plusieurs de ces avis sont repris sur cette page, avec le lien vers la fiche complète.',
+          cta: 'Lire les avis',
         },
         {
           q: 'Vous intervenez aussi pour les entreprises ?',
@@ -124,8 +137,8 @@ export const FR_B = {
       'Crédit d’impôt de 50 % sur l’entretien',
     ],
     zone: 'Brunoy, Yerres, Montgeron et villes voisines',
-    // Horaires à confirmer avec Clément : emplacement laissé vide.
-    horaires: '',
+    // Horaires de la fiche Google, relevés le 07/10/2026.
+    horaires: 'Lun – ven 8h – 17h30 · Sam 8h – 12h30 · Dim. fermé',
     champNom: 'Nom et prénom',
     champLieu: 'Commune ou code postal',
     selectionner: 'Sélectionner…',
@@ -170,6 +183,8 @@ export const FR_B = {
       'Jardinier paysagiste à Brunoy. Contrats d’entretien annuels, tonte, taille de haies, élagage et création de jardins pour particuliers et professionnels.',
     instagram: 'Instagram',
     tiktok: 'TikTok',
+    linkedin: 'LinkedIn',
+    horaires: 'Lun – ven 8h – 17h30 · Sam 8h – 12h30',
     colPrestations: 'Prestations',
     colEntreprise: 'Vert Demain',
     colContact: 'Contact',

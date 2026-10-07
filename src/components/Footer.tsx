@@ -1,4 +1,4 @@
-import { ArrowUpRight, Instagram, Mail, MapPin, Phone } from 'lucide-react';
+import { ArrowUpRight, Clock, Instagram, Linkedin, Mail, MapPin, Phone } from 'lucide-react';
 import TexteRevele from '@/components/ui/TexteRevele';
 import { T, lien, PAGE_LEGALE } from '@/lib/i18n';
 
@@ -9,6 +9,8 @@ const ENTREPRISE = ['#realisations', '#solutions', '#secteurs', '#faq'];
 // Comptes vérifiés le 06/10/2026 (liens présents sur clement-vertdemain.com).
 const INSTAGRAM = 'https://www.instagram.com/clement_vertdemain/';
 const TIKTOK = 'https://www.tiktok.com/@vertdemain';
+// Profil fourni par l'utilisateur le 07/10/2026 (illisible sans compte LinkedIn).
+const LINKEDIN = 'https://fr.linkedin.com/in/clementlasfont';
 
 export default function Footer() {
   const t = T();
@@ -88,6 +90,15 @@ export default function Footer() {
                 <LogoTiktok />
                 {t.footer.tiktok}
               </a>
+              <a
+                href={LINKEDIN}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex w-fit items-center gap-2 rounded-sm border border-citron-dark bg-white/40 px-3.5 py-2.5 text-[13px] font-medium text-sapin transition-colors hover:bg-white/70"
+              >
+                <Linkedin size={16} aria-hidden />
+                {t.footer.linkedin}
+              </a>
             </div>
           </div>
 
@@ -145,6 +156,10 @@ export default function Footer() {
               <Mail size={15} className="shrink-0" />
               <span>clement.vertdemain<wbr />@gmail.com</span>
             </a>
+            <p className="flex items-start gap-2 text-[15px] text-sapin/80">
+              <Clock size={15} className="mt-1 shrink-0" />
+              {t.footer.horaires}
+            </p>
           </div>
         </div>
 
