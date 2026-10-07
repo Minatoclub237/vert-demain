@@ -1,14 +1,8 @@
 import { useState } from 'react';
 import { ChevronDown, Menu, Phone, X } from 'lucide-react';
 import { T, lien } from '@/lib/i18n';
+import { NAV_LINKS } from '@/lib/nav';
 
-// Les libellés viennent du dictionnaire ; seuls les ancres restent ici.
-const NAV_LINKS = [
-  { cle: 'savoirFaire', href: '#solutions' },
-  { cle: 'services', href: '#secteurs' },
-  { cle: 'realisations', href: '#realisations' },
-  { cle: 'faq', href: '#faq' },
-] as const;
 
 const TEL_DISPLAY = '06 79 48 24 92';
 const TEL_HREF = 'tel:+33679482492';
@@ -38,12 +32,12 @@ export default function Hero({ onAdvance }: { onAdvance: () => void }) {
             <LogoMark />
           </div>
 
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden lg:flex items-center gap-1">
             {NAV_LINKS.map((link, i) => (
               <a
                 key={t.nav[link.cle]}
                 href={lien(link.href)}
-                className="px-5 py-2.5 bg-sapin/5 rounded-sm text-[13px] font-medium uppercase tracking-[0.07em] text-sapin hover:bg-sapin/10 transition-colors animate-fade-up"
+                className="px-4 py-2.5 bg-sapin/5 rounded-sm text-[13px] whitespace-nowrap font-medium uppercase tracking-[0.07em] text-sapin hover:bg-sapin/10 transition-colors animate-fade-up"
                 style={{ animationDelay: `${500 + i * 80}ms` }}
               >
                 {t.nav[link.cle]}
@@ -53,7 +47,7 @@ export default function Hero({ onAdvance }: { onAdvance: () => void }) {
 
           <a
             href={lien('#contact')}
-            className="hidden md:inline-flex px-6 py-3.5 bg-sapin rounded-sm text-citron text-[13px] font-medium uppercase tracking-[0.07em] hover:bg-sapin-deep transition-colors animate-fade-up"
+            className="hidden lg:inline-flex px-6 py-3.5 bg-sapin rounded-sm text-citron text-[13px] font-medium uppercase tracking-[0.07em] hover:bg-sapin-deep transition-colors animate-fade-up"
             style={{ animationDelay: '820ms' }}
           >
             {t.commun.devisGratuit}
@@ -62,7 +56,7 @@ export default function Hero({ onAdvance }: { onAdvance: () => void }) {
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label={t.nav.ouvrirMenu}
-            className="md:hidden flex items-center justify-center w-10 h-10 rounded-sm bg-sapin/5 hover:bg-sapin/10 transition-colors animate-fade-in"
+            className="lg:hidden flex items-center justify-center w-10 h-10 rounded-sm bg-sapin/5 hover:bg-sapin/10 transition-colors animate-fade-in"
             style={{ animationDelay: '500ms' }}
           >
             <div className="relative w-5 h-5">
@@ -83,7 +77,7 @@ export default function Hero({ onAdvance }: { onAdvance: () => void }) {
         </nav>
 
         <div
-          className={`md:hidden absolute inset-0 top-[4rem] sm:top-[5.5rem] z-20 bg-citron flex flex-col transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          className={`lg:hidden absolute inset-0 top-[4rem] sm:top-[5.5rem] z-20 bg-citron flex flex-col transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
             menuOpen
               ? 'opacity-100 translate-y-0 pointer-events-auto'
               : 'opacity-0 -translate-y-4 pointer-events-none'

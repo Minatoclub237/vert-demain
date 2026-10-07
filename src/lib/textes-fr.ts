@@ -28,9 +28,10 @@ const FR_A = {
   },
 
   nav: {
-    savoirFaire: 'Savoir-faire',
-    services: 'Prestations',
+    prestations: 'Prestations',
     realisations: 'Réalisations',
+    avantApres: 'Avant / après',
+    avis: 'Avis',
     faq: 'FAQ',
     ouvrirMenu: 'Ouvrir le menu',
   },
