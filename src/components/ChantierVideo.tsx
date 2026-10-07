@@ -4,13 +4,17 @@ import TexteRevele from '@/components/ui/TexteRevele';
 import Vide from '@/components/ui/Vide';
 import { T, lien } from '@/lib/i18n';
 
-// Cinq emplacements vidéo, vides en attendant les fichiers TikTok du client
-// (portrait 9:16, H.264 sans audio). Titres et descriptions : dictionnaire.
-const CLIPS: { src: string; poster: string; duree: string }[] = Array.from({ length: 5 }, () => ({
-  src: '',
-  poster: '',
-  duree: '',
-}));
+// Cinq vidéos du client remontées en boucles muettes (scripts/montage-videos.cjs),
+// dans l'ordre du récit : le jardin oublié, puis le travail, puis le jardin fini.
+// Seuls les fichiers restent ici : titres et descriptions viennent du dictionnaire.
+// Un `src` vide affiche un emplacement « Vidéo à venir ».
+const CLIPS: { src: string; poster: string; duree: string }[] = [
+  { src: '/video/carte-01.mp4', poster: '/video/carte-01.jpg', duree: '12 s' },
+  { src: '/video/carte-02.mp4', poster: '/video/carte-02.jpg', duree: '12 s' },
+  { src: '/video/carte-03.mp4', poster: '/video/carte-03.jpg', duree: '13 s' },
+  { src: '/video/carte-04.mp4', poster: '/video/carte-04.jpg', duree: '14 s' },
+  { src: '/video/carte-05.mp4', poster: '/video/carte-05.jpg', duree: '14 s' },
+];
 
 const PAS = 42; // degres entre deux cartes sur le cylindre
 

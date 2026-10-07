@@ -143,13 +143,29 @@ const FR_A = {
     titreAccent: 'le terrain',
     intro:
       'Ni mise en scène ni drone : ce qu’on voit en arrivant dans le jardin, et ce qu’on laisse en repartant.',
-    // Emplacements vides : titres et vidéos à reprendre des fichiers TikTok du client.
+    // Une entrée par vidéo de ChantierVideo.tsx, dans le même ordre. Descriptions fidèles
+    // à ce que montrent les images, sans espèce ni durée de chantier qui n'y figure pas.
     clips: [
-      { titre: '', detail: '' },
-      { titre: '', detail: '' },
-      { titre: '', detail: '' },
-      { titre: '', detail: '' },
-      { titre: '', detail: '' },
+      {
+        titre: 'Le jardin oublié',
+        detail: 'Herbes hautes et friche : débroussaillage complet, jusqu’à retrouver la surface du terrain.',
+      },
+      {
+        titre: 'Haies au cordeau',
+        detail: 'Haies, arche végétale et façade grimpante taillées sur échelle, puis les déchets ramassés.',
+      },
+      {
+        titre: 'Un massif qui repart',
+        detail: 'Arrachage et désherbage d’un massif fatigué, puis plantation, bulbes et paillage.',
+      },
+      {
+        titre: 'Une pelouse de stade',
+        detail: 'Sol travaillé au motoculteur, apport de terre, nivellement, puis gazon posé en rouleaux.',
+      },
+      {
+        titre: 'L’allée, un mois après',
+        detail: 'Retour d’entretien après une création : taille des bordures le long de l’allée en pierre.',
+      },
     ],
   },
 

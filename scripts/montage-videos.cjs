@@ -1,18 +1,26 @@
-// Montage des deux vidéos Vert Demain : hero (carré 900, vidéo A) et fond en triptyque
-// (3 panneaux 450x800, vidéo B + plans restants de A). Muet, H.264, boucles sans couture.
+// Montage des vidéos Vert Demain, toutes muettes, H.264, en boucles sans couture :
+//   hero   : carré 900, vidéo A
+//   fond   : triptyque de 3 panneaux 450x800, vidéo B + plans restants de A
+//   cartes : 5 clips 540x960 pour le carrousel 3D « Sur le terrain » (c1…c5)
 //
-// Usage : node scripts/montage-videos.cjs <dossier contenant a.mp4 et b.mp4>
-//   a.mp4 = « À partir de demain, retrouvez 1 vidéo par jour… » (720x1280, 52 s)
-//   b.mp4 = « Je pensais pas que mon jardin était si grand… » (360x640, 55 s)
-// Les sources (36 Mo) ne sont pas versionnées. Points d'entrée/sortie en secondes ci-dessous :
+// Usage : node scripts/montage-videos.cjs <dossier des sources> [hero,fond,cartes]
+//   a.mp4  = « À partir de demain, retrouvez 1 vidéo par jour… » (720x1280, 52 s)
+//   b.mp4  = « Je pensais pas que mon jardin était si grand… » (360x640, 55 s)
+//   c1.mp4 = « Jardin oublié vs FS240 » (576x1024)
+//   c2.mp4 = « Envoyez vos haies j'aime trop la taille » (360x640)
+//   c3.mp4 = « Rafraîchissement d'un massif » (576x1024)
+//   c4.mp4 = « Enfant j'aurais rêvé avoir une pelouse comme ça… » (576x1024)
+//   c5.mp4 = « Après un mois de création, retrouver l'entretien… » (720x1280)
+// Les sources ne sont pas versionnées. Points d'entrée/sortie en secondes ci-dessous :
 // ils évitent le logo incrusté (début/fin de A), la légende (A, 40,5 s) et la carte
 // « Calendrier de l'Avent » (début/fin de B). Nécessite ffmpeg dans le PATH.
 const { execFileSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
-if (!process.argv[2]) throw new Error('Indiquer le dossier des vidéos sources (a.mp4, b.mp4).');
+if (!process.argv[2]) throw new Error('Indiquer le dossier des vidéos sources.');
 const SRC = path.resolve(process.argv[2]);
+const PARTIES = (process.argv[3] || 'hero,fond,cartes').split(',');
 const DIR = fs.mkdtempSync(path.join(os.tmpdir(), 'montage-vd-'));
 const OUT = path.join(__dirname, '..', 'public', 'video');
 fs.mkdirSync(OUT, { recursive: true });
@@ -31,13 +39,15 @@ function deuxPasses(entree, kbps, out) {
 }
 
 // ---------- rendu d'un plan : recadrage, poussée lente, étalonnage ----------
-function plan({ src, a, b, w, h, cropY = null, zoomIn = true, zoom = 0.07, grade, pre = '', out }) {
+// `vitesse` > 1 accélère le plan (timelapse) ; la durée rendue est (b - a) / vitesse.
+function plan({ src, a, b, w, h, cropY = null, zoomIn = true, zoom = 0.07, vitesse = 1, grade, pre = '', out }) {
   const dur = +(b - a).toFixed(3);
-  const n = Math.round(dur * FPS);
+  const n = Math.round((dur / vitesse) * FPS);
   const z = zoomIn ? `1+${zoom}*on/${n}` : `${1 + zoom}-${zoom}*on/${n}`;
   const crop = cropY === null ? '' : `crop=720:720:0:${cropY},`;
   // agrandi x2 avant zoompan : la poussée reste fluide (pas de saccade au pixel entier)
   const vf = [
+    ...(vitesse === 1 ? [] : [`setpts=PTS/${vitesse}`]),
     `fps=${FPS}`,
     `${pre}${crop}scale=${w * 2}:${h * 2}:flags=lanczos`,
     `zoompan=z='${z}':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=${w}x${h}:fps=${FPS}`,
@@ -47,6 +57,27 @@ function plan({ src, a, b, w, h, cropY = null, zoomIn = true, zoom = 0.07, grade
   ff(['-ss', String(a), '-t', String(dur), '-i', path.join(SRC, src), '-an', '-vf', vf,
       '-c:v', 'libx264', '-crf', '12', '-preset', 'veryfast', '-r', String(FPS), out]);
   return { file: out, dur: n / FPS };
+}
+
+// ---------- boucle cyclique : p0 → … → pN → p0, puis une période entière ----------
+// La couture tombe dans le 1er plan, après la fin du fondu d'entrée : sinon une trace
+// de l'autre plan reste visible à chaque tour (mesuré au PSNR).
+function boucleCyclique(plans, transitions, kbps, out) {
+  const seq = [...plans, plans[0]];
+  const inputs = seq.flatMap((p) => ['-i', p.file]);
+  let fc = '', prev = '[0:v]', t = 0;
+  transitions.forEach((s, k) => {
+    t += seq[k].dur - s.d;
+    const lab = `[x${k}]`;
+    fc += `${prev}[${k + 1}:v]xfade=transition=${s.t}:duration=${s.d}:offset=${t.toFixed(3)}${lab};`;
+    prev = lab;
+  });
+  const periode = transitions.reduce((acc, s, k) => acc + plans[k].dur - s.d, 0);
+  const u0 = transitions[transitions.length - 1].d + 0.3;
+  if (u0 > plans[0].dur - transitions[0].d) throw new Error(`1er plan trop court pour la couture (${out})`);
+  fc += `${prev}trim=start=${u0.toFixed(3)}:duration=${periode.toFixed(3)},setpts=PTS-STARTPTS[v]`;
+  deuxPasses([...inputs, '-filter_complex', fc, '-map', '[v]'], kbps, out);
+  return periode;
 }
 
 // =====================================================================
@@ -62,26 +93,14 @@ const HERO = [
   { a: 13.3, b: 16.0, y: 150, t: 'smoothleft', d: 0.4 },  // remontée vers la couronne
   { a: 32.2, b: 34.3, y: 400, t: 'fade', d: 0.4 },        // paillage + pelouse rayée -> retour au 1er plan
 ];
-const heroPlans = HERO.map((s, i) =>
-  plan({ src: 'a.mp4', a: s.a, b: s.b, w: 900, h: 900, cropY: s.y, zoomIn: i % 2 === 0, grade: GRADE_HERO,
-         out: path.join(DIR, 'tmp', `h${i}.mp4`) }));
-
-// chaîne cyclique h0 → … → h6 → h0, puis on découpe une période entière
-const seq = [...heroPlans, heroPlans[0]];
-const inputs = seq.flatMap((p) => ['-i', p.file]);
-let fc = '', prev = '[0:v]', t = 0;
-HERO.forEach((s, k) => {
-  t += seq[k].dur - s.d;
-  const lab = `[x${k}]`;
-  fc += `${prev}[${k + 1}:v]xfade=transition=${s.t}:duration=${s.d}:offset=${t.toFixed(3)}${lab};`;
-  prev = lab;
-});
-const periode = HERO.reduce((acc, s, k) => acc + heroPlans[k].dur - s.d, 0);
-const u0 = HERO[HERO.length - 1].d + 0.3; // dans le 1er plan, nettement après le fondu d'entrée
-fc += `${prev}trim=start=${u0.toFixed(3)}:duration=${periode.toFixed(3)},setpts=PTS-STARTPTS[v]`;
-deuxPasses([...inputs, '-filter_complex', fc, '-map', '[v]'], 2400, path.join(OUT, 'hero-vert-demain.mp4'));
-ff(['-ss', '0.4', '-i', path.join(OUT, 'hero-vert-demain.mp4'), '-frames:v', '1', '-q:v', '3', path.join(OUT, 'hero-poster.jpg')]);
-console.log('hero : période', periode.toFixed(2), 's');
+if (PARTIES.includes('hero')) {
+  const heroPlans = HERO.map((s, i) =>
+    plan({ src: 'a.mp4', a: s.a, b: s.b, w: 900, h: 900, cropY: s.y, zoomIn: i % 2 === 0, grade: GRADE_HERO,
+           out: path.join(DIR, 'tmp', `h${i}.mp4`) }));
+  const periode = boucleCyclique(heroPlans, HERO, 2400, path.join(OUT, 'hero-vert-demain.mp4'));
+  ff(['-ss', '0.4', '-i', path.join(OUT, 'hero-vert-demain.mp4'), '-frames:v', '1', '-q:v', '3', path.join(OUT, 'hero-poster.jpg')]);
+  console.log('hero : période', periode.toFixed(2), 's');
+}
 
 // =====================================================================
 // FOND : triptyque « avant · pendant · après », 3 panneaux 450x800
@@ -98,6 +117,7 @@ const PANNEAUX = {
 // décalage de la boucle de chaque panneau : ils ne coupent jamais tous en même temps
 const DECALAGE = { avant: 0, pendant: 1.15, apres: 2.3 };
 
+if (PARTIES.includes('fond')) {
 const panneaux = Object.entries(PANNEAUX).map(([nom, plans]) => {
   const fichiers = plans.map(([src, a, b], i) =>
     plan({ src: `${src}.mp4`, a, b, w: 450, h: 800, zoomIn: i % 2 === 1, zoom: 0.05,
@@ -125,4 +145,32 @@ deuxPasses(['-i', panneaux[0], '-i', panneaux[1], '-i', panneaux[2],
     `${gouttiere}[g1];${gouttiere}[g2];[0:v][g1][1:v][g2][2:v]hstack=5,vignette=angle=PI/5,format=yuv420p[v]`,
     '-map', '[v]', '-t', String(P)], 3200, path.join(OUT, 'fond-triptyque.mp4'));
 ff(['-ss', '0.5', '-i', path.join(OUT, 'fond-triptyque.mp4'), '-frames:v', '1', '-q:v', '4', path.join(OUT, 'fond-poster.jpg')]);
+}
+
+// =====================================================================
+// CARTES : 5 clips 540x960 pour le carrousel 3D, du jardin oublié au jardin fini
+// =====================================================================
+// [début, fin, vitesse] dans la source. Les longs timelapses sont accélérés (x2 à x6) ;
+// les cartes « Calendrier de l'Avent », légendes et écran partagé « Avant/Après » sont évités.
+const GRADE_CARTE = "eq=contrast=1.05:saturation=1.08,unsharp=5:5:0.5";
+const CARTES = [
+  { src: 'c1.mp4', plans: [[2.0, 4.6, 1], [7.0, 15.0, 3], [32, 45, 4], [47, 61, 4], [61.8, 63.4, 1]] },
+  { src: 'c2.mp4', pre: PRE_B, plans: [[15.5, 19.5, 2], [26.0, 30.0, 2], [41, 47, 2.5], [49.5, 55.5, 2.5], [67, 73, 2.5], [79, 85, 2.5]] },
+  { src: 'c3.mp4', plans: [[5.5, 12.5, 2.5], [14.0, 17.0, 1.5], [31, 42, 3.5], [50, 68, 5], [71.3, 74.8, 1.2]] },
+  { src: 'c4.mp4', plans: [[6.5, 10.5, 2], [14.2, 18.8, 2], [19.5, 28.5, 4], [35.5, 44.0, 3], [63.0, 71.5, 3], [77.3, 81.5, 1.5]] },
+  { src: 'c5.mp4', plans: [[0.5, 5.5, 1.5], [16, 43, 6], [53, 64.5, 4], [68.5, 75.5, 1.6]] },
+];
+if (PARTIES.includes('cartes')) {
+  CARTES.forEach((c, k) => {
+    const nom = `carte-0${k + 1}`;
+    const plans = c.plans.map(([a, b, vitesse], i) =>
+      plan({ src: c.src, a, b, vitesse, w: 540, h: 960, zoomIn: i % 2 === 0, zoom: 0.05, pre: c.pre || '',
+             grade: GRADE_CARTE + (c.pre ? SHARP : ''), out: path.join(DIR, 'tmp', `${nom}-${i}.mp4`) }));
+    // coupes franches adoucies (0,2 s), fondu plus long pour revenir au début
+    const transitions = plans.map((_, i) => ({ t: 'fade', d: i === plans.length - 1 ? 0.4 : 0.2 }));
+    const periode = boucleCyclique(plans, transitions, 1100, path.join(OUT, `${nom}.mp4`));
+    ff(['-ss', '0.3', '-i', path.join(OUT, `${nom}.mp4`), '-frames:v', '1', '-q:v', '4', path.join(OUT, `${nom}.jpg`)]);
+    console.log(nom, ':', periode.toFixed(2), 's');
+  });
+}
 console.log('terminé');
