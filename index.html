@@ -211,9 +211,10 @@
         html.classList.add('vd-chargement');
         var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         // durée minimale : le temps que l'ouverture et le reflet se jouent en entier
-        var MIN = reduit ? 500 : 2600, MAX = 7000;
+        var MIN = reduit ? 500 : 2600, MAX = 5000, FIN = 400;
         var trace = el.querySelector('.trace'), tete = el.querySelector('.tete-g');
-        var debut = performance.now(), charge = false, fini = false, p = 0;
+        var debut = performance.now(), fini = false;
+        var tPret = null, pPret = 0; // instant où la page est prête, et progression à cet instant
 
         function sortie() {
           if (fini) return;
@@ -224,22 +225,41 @@
           setTimeout(function () { el.remove(); }, 1300);
         }
 
+        // Progression calculée sur l'HORLOGE, pas image par image : sur un téléphone qui
+        // affiche peu d'images par seconde, l'anneau n'a plus de retard à rattraper.
+        function progression(now) {
+          var t = now - debut;
+          var attente = 0.9 * (1 - Math.exp(-t / 1100)); // vers 90 % tant que la page prépare
+          if (tPret === null) return attente;
+          var k = Math.min(1, (now - tPret) / FIN); // puis 100 % en FIN ms, quoi qu'il arrive
+          return pPret + (1 - pPret) * (1 - Math.pow(1 - k, 3));
+        }
+
         function image() {
-          var t = performance.now() - debut;
-          // avance vers 90 % tant que la page charge, puis file vers 100 %
-          var cible = charge ? 1 : 0.9 * (1 - Math.exp(-t / 1100));
-          p += (cible - p) * (charge ? 0.12 : 0.06);
+          var now = performance.now(), t = now - debut;
+          var p = progression(now);
           trace.style.strokeDashoffset = String(100 - p * 100);
           tete.setAttribute('transform', 'rotate(' + (p * 360).toFixed(2) + ' 50 49.4)');
-          if (charge && p > 0.995 && t >= MIN) { trace.style.strokeDashoffset = '0'; return sortie(); }
-          if (t > MAX) return sortie(); // une vidéo lente ne doit pas bloquer l'entrée
+          if (tPret !== null && now - tPret >= FIN && t >= MIN) return sortie();
+          if (t > MAX) return sortie(); // réseau très lent : on n'attend pas plus
           requestAnimationFrame(image);
         }
         requestAnimationFrame(image);
 
-        function pret() { charge = true; }
-        if (document.readyState === 'complete') pret();
-        else window.addEventListener('load', pret, { once: true });
+        // « Prête » = le code a tourné (le hero est rendu) et les polices sont là.
+        // On n'attend PAS l'événement load : il attend aussi les affiches et images plus bas
+        // dans la page, que le visiteur ne voit pas encore.
+        function pret() {
+          if (tPret !== null) return;
+          pPret = progression(performance.now());
+          tPret = performance.now();
+        }
+        function quandDomPret() {
+          if (document.fonts && document.fonts.ready) document.fonts.ready.then(pret, pret);
+          else pret();
+        }
+        if (document.readyState !== 'loading') quandDomPret();
+        else document.addEventListener('DOMContentLoaded', quandDomPret, { once: true });
       })();
     </script>
 
