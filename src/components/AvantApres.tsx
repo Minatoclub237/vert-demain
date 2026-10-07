@@ -107,6 +107,8 @@ export default function AvantApres() {
         // en se posant ; à pleine opacité, c'est le déplacement qui se voit.
         const cote = i % 2 ? 1 : -1;
         const reste = 1 - entree;
+        // Même mouvement visible sur mobile : 22vw y ne faisait que 86 px, on passe à 45vw (~175 px).
+        const voyage = window.innerWidth < 768 ? 45 : 22;
         return (
           <div
             key={p}
@@ -120,7 +122,7 @@ export default function AvantApres() {
               <div
                 className="mx-auto w-full max-w-[1400px] px-5 sm:px-8 lg:px-12"
                 style={{
-                  transform: `translate3d(${reste * cote * 22}vw, 0, 0) rotateY(${reste * -cote * 24}deg) scale(${0.92 + entree * 0.08})`,
+                  transform: `translate3d(${reste * cote * voyage}vw, 0, 0) rotateY(${reste * -cote * 24}deg) scale(${0.92 + entree * 0.08})`,
                   opacity: 0.55 + entree * 0.45,
                 }}
               >

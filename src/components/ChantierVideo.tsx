@@ -116,7 +116,7 @@ export default function ChantierVideo() {
             className="pointer-events-none absolute left-1/2 top-1/2 h-[70vmin] w-[70vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-citron/10 blur-[90px]"
           />
 
-          <div className="relative mx-auto flex h-full max-w-[1400px] flex-col px-5 pb-8 pt-20 sm:px-8 sm:pt-24 lg:px-12">
+          <div className="relative mx-auto flex h-full max-w-[1400px] flex-col px-5 pb-[calc(2rem+var(--barre-mobile))] pt-20 sm:px-8 sm:pt-24 lg:px-12">
             <header className="shrink-0">
               <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-citron">
                 {t.chantier.kicker}

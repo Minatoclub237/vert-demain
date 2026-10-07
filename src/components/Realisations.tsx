@@ -442,7 +442,7 @@ function Vignette({
         </h4>
         <ArrowUpRight
           size={18}
-          className="shrink-0 text-white/60 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white"
+          className="shrink-0 text-white/60 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white group-active:translate-x-0.5 group-active:text-white"
         />
       </div>
     </button>

@@ -4,6 +4,9 @@ import App from './App.tsx';
 import '@fontsource-variable/urbanist';
 import '@fontsource-variable/inter';
 import './index.css';
+import { installerMesure } from './lib/mesure';
+
+installerMesure();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

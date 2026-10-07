@@ -22,7 +22,7 @@ export default function Footer() {
       <div className="absolute bottom-2 left-2 sm:bottom-3 sm:left-3 w-1 h-1 bg-sapin" />
       <div className="absolute bottom-2 right-2 sm:bottom-3 sm:right-3 w-1 h-1 bg-sapin" />
 
-      <div className="relative mx-auto max-w-[1180px] px-6 sm:px-10 lg:px-14 pt-14 sm:pt-20 pb-6">
+      <div className="relative mx-auto max-w-[1180px] px-6 sm:px-10 lg:px-14 pt-14 sm:pt-20 pb-[calc(1.5rem+var(--barre-mobile))]">
         <div className="flex flex-col gap-8 border-b border-dashed border-citron-dark pb-12 lg:flex-row lg:items-end lg:justify-between">
           <TexteRevele
             as="h2"

@@ -112,9 +112,9 @@ export default function ApresVente() {
             style={{ marginLeft: '-60vw', marginTop: '-30vw' }}
           />
 
-          <div className="relative mx-auto grid h-full max-w-[1400px] grid-rows-[auto_minmax(0,1fr)] gap-6 px-5 pb-8 pt-16 sm:px-8 sm:pt-20 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:grid-rows-1 lg:items-center lg:gap-14 lg:px-12 lg:pt-0">
+          <div className="relative mx-auto grid h-full max-w-[1400px] grid-rows-[auto_minmax(0,1fr)] gap-6 px-5 pb-[calc(2rem+var(--barre-mobile))] pt-16 sm:px-8 sm:pt-20 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:grid-rows-1 lg:items-center lg:gap-14 lg:px-12 lg:pt-0">
             {/* Le jeu de cartes photo */}
-            <div className="relative order-1 h-[38vh] sm:h-[44vh] lg:order-2 lg:h-[70vh]">
+            <div className="relative order-1 h-[30vh] sm:h-[44vh] lg:order-2 lg:h-[70vh]">
               {CARTES.map((c, k) => (
                 // L'enveloppe centre la carte : un absolu étiré par inset-0 ignorerait aspect-ratio.
                 <div key={c.grande} className="pointer-events-none absolute inset-0 flex items-center justify-center" style={{ zIndex: 10 + k }}>
@@ -133,6 +133,14 @@ export default function ApresVente() {
                   </div>
                 </div>
               ))}
+              <figure
+                className={`absolute inset-x-2 top-2 z-40 rounded-xl bg-sapin/85 px-4 py-3 text-creme shadow-lg backdrop-blur-sm transition-[opacity,transform] duration-700 lg:hidden ${
+                  actif === 0 ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'
+                }`}
+              >
+                <blockquote className="text-[15px] font-medium italic leading-snug">{e.citation}</blockquote>
+                <figcaption className="mt-0.5 text-[12px] text-creme/70">{e.citationSource}</figcaption>
+              </figure>
               {CARTES.map((c, k) => (
                 <div
                   key={c.petite}
@@ -166,7 +174,7 @@ export default function ApresVente() {
                     <li
                       key={s.num}
                       className={`transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                        on ? 'translate-x-0 opacity-100' : 'opacity-30 lg:-translate-x-6'
+                        on ? 'translate-x-0 opacity-100' : '-translate-x-6 opacity-30'
                       }`}
                     >
                       <div className="flex items-baseline gap-4">

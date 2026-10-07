@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react';
 import { ArrowUpRight, Clock, Mail, MapPin, Phone } from 'lucide-react';
 import TexteRevele from '@/components/ui/TexteRevele';
 import { Blanc } from '@/components/ui/Vide';
+import { suivre } from '@/lib/mesure';
 import { Glisse } from '@/components/scroll/Parallaxe';
 import { T } from '@/lib/i18n';
 
@@ -36,6 +37,7 @@ export default function Contact() {
       `Demande de devis — ${get('type')} — ${get('nom')}`
     )}&body=${encodeURIComponent(corps)}`;
 
+    suivre('demande-devis', { type: get('type'), delai: get('delai') });
     setSent(true);
   };
 

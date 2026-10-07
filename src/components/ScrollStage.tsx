@@ -10,7 +10,7 @@ import { T, lien } from '@/lib/i18n';
 const SERVICES_ANCRES = ['#realisations-entretien', '#realisations-taille', '#realisations-creation', '#contrat'];
 
 const SECTION_SHELL =
-  'relative flex flex-col justify-between gap-10 px-5 sm:px-8 md:px-12 pt-24 sm:pt-28 pb-12 md:pb-16';
+  'relative flex flex-col justify-between gap-10 px-5 sm:px-8 md:px-12 pt-24 sm:pt-28 pb-[calc(3rem+var(--barre-mobile))] md:pb-16';
 
 const SECTION_HEIGHT = 'min-h-screen supports-[height:100svh]:min-h-[100svh]';
 
@@ -151,7 +151,7 @@ export default function ScrollStage() {
                           {s.titre}
                           <ChevronRight
                             size={16}
-                            className="text-white/40 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-white"
+                            className="text-white/40 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-white group-active:translate-x-0.5 group-active:text-white"
                           />
                         </h3>
                         <p className="mt-1.5 text-[15px] leading-relaxed text-white/75">{s.texte}</p>

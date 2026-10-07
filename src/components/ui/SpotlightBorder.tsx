@@ -20,20 +20,55 @@ export function spotlightMaskStyle(size = 280, intensity = 0.6): CSSProperties {
 
 // Suit le curseur sur tout le document : chaque conteneur écrit ses propres
 // --spot-x / --spot-y, relatives à sa boîte.
+// Sur écran tactile (pas de survol), le halo n'aurait jamais bougé : il balaie alors
+// la bordure en diagonale au fil du défilement, et se pose sous le doigt au toucher.
 export function useSpotlight<T extends HTMLElement>() {
   const ref = useRef<T>(null);
 
   useEffect(() => {
-    const onMove = (e: MouseEvent) => {
+    const poser = (x: number, y: number) => {
       const el = ref.current;
       if (!el) return;
       const rect = el.getBoundingClientRect();
-      el.style.setProperty('--spot-x', `${e.clientX - rect.left}px`);
-      el.style.setProperty('--spot-y', `${e.clientY - rect.top}px`);
+      el.style.setProperty('--spot-x', `${x - rect.left}px`);
+      el.style.setProperty('--spot-y', `${y - rect.top}px`);
+    };
+    const onMove = (e: MouseEvent) => poser(e.clientX, e.clientY);
+    const onTouch = (e: TouchEvent) => {
+      const t = e.touches[0];
+      if (t) poser(t.clientX, t.clientY);
+    };
+
+    const tactile = window.matchMedia('(hover: none)').matches;
+    let raf = 0;
+    const balayer = () => {
+      raf = 0;
+      const el = ref.current;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const p = Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height)));
+      el.style.setProperty('--spot-x', `${p * r.width}px`);
+      el.style.setProperty('--spot-y', `${(1 - p) * r.height}px`);
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(balayer);
     };
 
     window.addEventListener('mousemove', onMove);
-    return () => window.removeEventListener('mousemove', onMove);
+    if (tactile) {
+      balayer();
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('touchstart', onTouch, { passive: true });
+      window.addEventListener('touchmove', onTouch, { passive: true });
+    }
+    return () => {
+      if (raf) cancelAnimationFrame(raf);
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('touchstart', onTouch);
+      window.removeEventListener('touchmove', onTouch);
+    };
   }, []);
 
   return ref;

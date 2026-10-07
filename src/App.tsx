@@ -10,6 +10,7 @@ import Avis from '@/components/Avis';
 import Faq from '@/components/Faq';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
+import BarreMobile from '@/components/BarreMobile';
 
 // Le hero reste en place pendant que la section suivante glisse par-dessus :
 // il s'efface légèrement sur la hauteur d'un écran.
@@ -102,6 +103,8 @@ export default function App() {
       <Contact />
 
       <Footer />
+
+      <BarreMobile />
     </main>
   );
 }

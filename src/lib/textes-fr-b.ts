@@ -2,6 +2,13 @@
 // Séparé de textes-fr.ts uniquement pour garder des fichiers lisibles.
 
 export const FR_B = {
+  barre: {
+    label: 'Contacter Vert Demain',
+    appeler: 'Appeler',
+    sms: 'SMS',
+    devis: 'Devis',
+  },
+
   avis: {
     kicker: 'Avis Google',
     titre: 'Ce qu’ils en',
@@ -248,6 +255,9 @@ export const FR_B = {
     cookiesTitre: 'Cookies et mesure d’audience',
     cookies1:
       'Ce site ne dépose aucun cookie publicitaire et n’utilise aucun traceur de profilage. Le formulaire de contact ouvre votre logiciel de messagerie : aucune donnée n’est enregistrée sur le site lui-même.',
+    // Affiché uniquement quand la mesure d'audience est activée (VITE_UMAMI_ID).
+    cookies3:
+      'Une mesure d’audience anonyme (Umami) compte les visites et les prises de contact — appels, SMS, e-mails, demandes de devis. Elle ne dépose aucun cookie, n’enregistre aucune adresse IP complète et ne permet pas de vous identifier ; elle respecte le réglage « Ne pas me pister » de votre navigateur.',
     cookies2:
       'Les polices de caractères sont hébergées avec le site : leur affichage n’établit aucune connexion à un serveur tiers.',
     litigesTitre: 'Médiation de la consommation',

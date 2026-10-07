@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Hauteur réservée par la barre d'appel mobile (BarreMobile.tsx), lue par les sections
+   collées pour que la barre ne masque rien. Nulle à partir de md, où la barre disparaît. */
+:root {
+  --barre-mobile: 0px;
+}
+@media (max-width: 767px) {
+  :root {
+    --barre-mobile: 84px;
+  }
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;

@@ -102,7 +102,7 @@ export default function Marquee() {
         onPointerMove={onPointerMove}
         onPointerUp={endDrag}
         onPointerCancel={endDrag}
-        className="flex w-max gap-3 sm:gap-4 py-4 select-none cursor-grab"
+        className="flex w-max gap-3 sm:gap-4 py-4 select-none cursor-grab touch-pan-y"
         style={{ willChange: 'transform' }}
       >
         {[...IMAGES, ...IMAGES].map((src, i) => (

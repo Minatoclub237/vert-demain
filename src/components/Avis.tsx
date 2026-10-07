@@ -209,7 +209,7 @@ export default function Avis() {
           </div>
 
           {/* Bande de photos, en sens inverse */}
-          <div className="relative -rotate-2 pb-8 sm:pb-10" aria-hidden>
+          <div className="relative -rotate-2 pb-[calc(2rem+var(--barre-mobile))] sm:pb-10" aria-hidden>
             <div ref={photosRef} className="flex w-max gap-3 will-change-transform sm:gap-4">
               {[...PHOTOS, ...PHOTOS].map((p, i) => (
                 <img

@@ -1,6 +1,7 @@
 import { ArrowLeft, Mail, MapPin, Phone } from 'lucide-react';
 import { T } from '@/lib/i18n';
 import { Blanc } from '@/components/ui/Vide';
+import { MESURE_ACTIVE } from '@/lib/mesure';
 
 // Identification vérifiée le 06/10/2026 dans le répertoire SIRENE (recherche-entreprises
 // .api.gouv.fr) : Clément Lasfont, entrepreneur individuel, SIREN 890 178 940, siège
@@ -159,6 +160,7 @@ export default function MentionsLegales() {
           <Bloc numero="07" titre={g.cookiesTitre}>
             <p>{g.cookies1}</p>
             <p>{g.cookies2}</p>
+            {MESURE_ACTIVE && <p>{g.cookies3}</p>}
           </Bloc>
 
           <Bloc numero="08" titre={g.litigesTitre}>
