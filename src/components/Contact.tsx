@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react';
 import { ArrowUpRight, Clock, Mail, MapPin, Phone } from 'lucide-react';
 import TexteRevele from '@/components/ui/TexteRevele';
 import { Blanc } from '@/components/ui/Vide';
+import { Glisse } from '@/components/scroll/Parallaxe';
 import { T } from '@/lib/i18n';
 
 const EMAIL = 'clement.vertdemain@gmail.com';
@@ -43,9 +44,10 @@ export default function Contact() {
   const label = 'block text-[11px] font-semibold uppercase tracking-[0.12em] text-sapin/60';
 
   return (
-    <section id="contact" className="relative z-[3] w-full bg-white font-inter text-sapin">
+    <section id="contact" className="relative z-[3] w-full overflow-x-clip bg-white font-inter text-sapin">
       <div className="mx-auto max-w-[1180px] px-6 sm:px-10 lg:px-14 py-16 sm:py-24">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-20">
+          <Glisse depuis="gauche">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-citron-dark">
               {t.contact.kicker}
@@ -96,7 +98,9 @@ export default function Contact() {
               ))}
             </ul>
           </div>
+          </Glisse>
 
+          <Glisse depuis="droite">
           <div className="rounded-sm border border-neutral-200 p-6 sm:p-8">
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
@@ -234,6 +238,7 @@ export default function Contact() {
               </p>
             </form>
           </div>
+          </Glisse>
         </div>
       </div>
     </section>

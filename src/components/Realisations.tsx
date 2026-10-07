@@ -11,6 +11,7 @@ export default function Realisations() {
   const rangeRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const cartesRef = useRef<(HTMLButtonElement | null)[]>([]);
+  const imagesRef = useRef<(HTMLImageElement | null)[]>([]);
   const metrics = useRef({ top: 0, height: 1 });
 
   // `ouverte` = la famille affichée en plein écran. null = rien d'ouvert.
@@ -31,6 +32,7 @@ export default function Realisations() {
     const range = rangeRef.current;
     const track = trackRef.current;
     if (!range || !track) return;
+    const reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const measure = () => {
       metrics.current = {
@@ -41,6 +43,7 @@ export default function Realisations() {
 
     let raf = 0;
     let dernierCentre = -1;
+    let translation = 0; // dernière translation écrite sur la piste
     const render = () => {
       raf = 0;
       const { top, height } = metrics.current;
@@ -50,25 +53,45 @@ export default function Realisations() {
 
       // Lecture AVANT l'écriture du transform : on évite de forcer un reflow
       // synchrone à chaque frame (la mesure a une frame de retard, invisible).
+      // Translation de cette image, calculée AVANT de lire les cartes : leurs positions
+      // lues portent encore l'ancienne translation, on les corrige de l'écart. Sans ça,
+      // après un saut (lien d'ancre, molette rapide) l'état « au centre » restait en retard.
+      const distance = Math.max(0, track.scrollWidth - window.innerWidth);
+      const cible = -progress * distance;
+      const ecartPiste = cible - translation;
       const cx = window.innerWidth / 2;
       let proche = 0;
       let ecart = Infinity;
-      cartesRef.current.forEach((el, i) => {
-        if (!el) return;
+      const decalages = cartesRef.current.map((el, i) => {
+        if (!el) return 0;
         const r = el.getBoundingClientRect();
-        const d = Math.abs(r.left + r.width / 2 - cx);
+        const brut = r.left + r.width / 2 + ecartPiste - cx;
+        const d = Math.abs(brut);
         if (d < ecart) {
           ecart = d;
           proche = i;
         }
+        // -1 (à gauche) → 0 (au centre) → 1 (à droite)
+        const n = brut / (window.innerWidth * 0.6);
+        return n < -1 ? -1 : n > 1 ? 1 : n;
       });
+      // Les cartes pivotent vers le centre et reculent en s'en éloignant ; la photo
+      // glisse en sens inverse dans son cadre (parallaxe intérieure).
+      if (!reduit) {
+        decalages.forEach((d, i) => {
+          const carte = cartesRef.current[i];
+          const img = imagesRef.current[i];
+          if (carte) carte.style.transform = `perspective(1400px) rotateY(${-d * 18}deg) translateZ(${-Math.abs(d) * 110}px)`;
+          if (img) img.style.transform = `translate3d(${-d * 8}%, 0, 0) scale(${i === proche ? 1.2 : 1.17})`;
+        });
+      }
       if (proche !== dernierCentre) {
         dernierCentre = proche;
         setCentre(proche);
       }
 
-      const distance = Math.max(0, track.scrollWidth - window.innerWidth);
-      track.style.transform = `translate3d(${-progress * distance}px, 0, 0)`;
+      track.style.transform = `translate3d(${cible}px, 0, 0)`;
+      translation = cible;
     };
 
     const onScroll = () => {
@@ -151,7 +174,8 @@ export default function Realisations() {
       className="relative z-[2] rounded-t-[40px] bg-[#FFFBF3] font-inter shadow-[0_-28px_60px_-18px_rgba(0,0,0,0.35)]"
     >
       {/* La bande des quatre familles, tirée par le défilement vertical. */}
-      <div ref={rangeRef} className="relative h-[300vh]">
+      {/* Plage proportionnelle au nombre de familles : la bande défile à peu près au rythme du scroll. */}
+      <div ref={rangeRef} className="relative" style={{ height: `${100 + FAMILLES.length * 60}vh` }}>
         <div className="sticky top-0 flex h-screen items-center overflow-x-clip supports-[height:100svh]:h-[100svh]">
           <div
             ref={trackRef}
@@ -185,13 +209,15 @@ export default function Realisations() {
                   className="group relative h-[58vh] max-h-[530px] w-[78vw] max-w-[620px] shrink-0 overflow-hidden rounded-2xl text-left"
                 >
                   <img
+                    ref={(el) => { imagesRef.current[i] = el; }}
                     src={f.couverture}
                     alt=""
                     aria-hidden
                     loading="lazy"
                     draggable={false}
-                    className={`absolute inset-0 h-full w-full object-cover transition-[filter,transform] duration-700 ease-out group-hover:scale-[1.03] group-hover:grayscale-0 ${
-                      actif ? 'scale-[1.03] grayscale-0' : 'grayscale'
+                    style={{ transform: 'scale(1.17)' }}
+                    className={`absolute inset-0 h-full w-full object-cover transition-[filter] duration-700 ease-out group-hover:grayscale-0 ${
+                      actif ? 'grayscale-0' : 'grayscale'
                     }`}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-sapin/80 via-sapin/25 to-transparent" />

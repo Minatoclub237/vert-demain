@@ -6,6 +6,8 @@
 // Usage : node scripts/montage-videos.cjs <dossier des sources> [hero,fond,cartes]
 //   a.mp4  = « À partir de demain, retrouvez 1 vidéo par jour… » (720x1280, 52 s)
 //   b.mp4  = « Je pensais pas que mon jardin était si grand… » (360x640, 55 s)
+//   d3.mp4 = même montage en 576x1024 (« Mettre en lumière le potentiel d'un jardin… ») :
+//            timeline identique (SSIM maximal à décalage nul), c'est lui qu'utilise le fond
 //   c1.mp4 = « Jardin oublié vs FS240 » (576x1024)
 //   c2.mp4 = « Envoyez vos haies j'aime trop la taille » (360x640)
 //   c3.mp4 = « Rafraîchissement d'un massif » (576x1024)
@@ -120,8 +122,9 @@ const DECALAGE = { avant: 0, pendant: 1.15, apres: 2.3 };
 if (PARTIES.includes('fond')) {
 const panneaux = Object.entries(PANNEAUX).map(([nom, plans]) => {
   const fichiers = plans.map(([src, a, b], i) =>
-    plan({ src: `${src}.mp4`, a, b, w: 450, h: 800, zoomIn: i % 2 === 1, zoom: 0.05,
-           pre: src === 'b' ? PRE_B : '', grade: GRADE_B + SHARP,
+    // 'b' = la version 576p (d3.mp4) : réduite à 450 px, elle n'a plus besoin de débruitage
+    plan({ src: src === 'b' ? 'd3.mp4' : `${src}.mp4`, a, b, w: 450, h: 800, zoomIn: i % 2 === 1, zoom: 0.05,
+           grade: GRADE_B + SHARP,
            out: path.join(DIR, 'tmp', `${nom}${i}.mp4`) }));
   const liste = path.join(DIR, 'tmp', `${nom}.txt`);
   fs.writeFileSync(liste, fichiers.map((f) => `file '${f.file.replace(/\\/g, '/')}'`).join('\n'));

@@ -7,7 +7,15 @@ import { T, lien } from '@/lib/i18n';
 // du site actuel du client. Chaque paire est confirmée sur un détail fixe (façade,
 // arche) ; la paire « palmiers » du site Wix a été écartée faute de preuve.
 // Seuls les slugs restent ici : les textes viennent du dictionnaire.
-const PAIRES = ['allee-gravillons', 'jasmin-arche'];
+// Les trois dernières paires sont tirées des vidéos du client (scripts/extraire-photos.cjs) :
+// jardin oublié et gazon filmés sur pied, massif photographié du même endroit par le client.
+const PAIRES: { slug: string; ratio: string }[] = [
+  { slug: 'allee-gravillons', ratio: '3 / 4' },
+  { slug: 'jasmin-arche', ratio: '3 / 4' },
+  { slug: 'jardin-oublie', ratio: '3 / 4' },
+  { slug: 'gazon-rouleaux', ratio: '3 / 4' },
+  { slug: 'massif-maison', ratio: '1 / 1' },
+];
 
 export default function AvantApres() {
   const t = T();
@@ -71,7 +79,7 @@ export default function AvantApres() {
   return (
     <section
       id="avant-apres"
-      className="relative z-[3] rounded-t-[40px] bg-sapin font-inter text-white shadow-[0_-28px_60px_-18px_rgba(0,0,0,0.5)]"
+      className="relative z-[3] overflow-x-clip rounded-t-[40px] bg-sapin font-inter text-white shadow-[0_-28px_60px_-18px_rgba(0,0,0,0.5)]"
     >
       <div className="mx-auto max-w-[1400px] px-5 pt-20 sm:px-8 sm:pt-24 lg:px-12">
         <header className="max-w-[46rem]">
@@ -91,22 +99,29 @@ export default function AvantApres() {
       </div>
 
       {/* Une plage par paire : la carte y reste collée, centrée, le temps du volet. */}
-      {PAIRES.map((p, i) => {
-            const tp = t.avantApres.paires[i];
+      {PAIRES.map(({ slug: p, ratio }, i) => {
+        const tp = t.avantApres.paires[i];
         const { volet, entree } = etats[i];
         const pct = Math.round(volet * 100);
+        // La carte arrive de son côté de la mise en page, couchée en 3D, et se redresse
+        // en se posant ; à pleine opacité, c'est le déplacement qui se voit.
+        const cote = i % 2 ? 1 : -1;
+        const reste = 1 - entree;
         return (
           <div
             key={p}
             ref={(el) => { plagesRef.current[i] = el; }}
             className="relative h-[165vh]"
           >
-            <div className="sticky top-0 flex h-screen items-center overflow-hidden supports-[height:100svh]:h-[100svh]">
+            <div
+              className="sticky top-0 flex h-screen items-center overflow-hidden supports-[height:100svh]:h-[100svh]"
+              style={{ perspective: '1600px' }}
+            >
               <div
                 className="mx-auto w-full max-w-[1400px] px-5 sm:px-8 lg:px-12"
                 style={{
-                  transform: `translateY(${(1 - entree) * 34}px) scale(${0.96 + entree * 0.04})`,
-                  opacity: 0.25 + entree * 0.75,
+                  transform: `translate3d(${reste * cote * 22}vw, 0, 0) rotateY(${reste * -cote * 24}deg) scale(${0.92 + entree * 0.08})`,
+                  opacity: 0.55 + entree * 0.45,
                 }}
               >
                 <article
@@ -115,7 +130,8 @@ export default function AvantApres() {
                   }`}
                 >
                   <div
-                    className={`relative mx-auto aspect-[3/4] h-[44vh] max-w-full overflow-hidden rounded-2xl bg-sapin/40 ring-1 ring-white/10 sm:h-[52vh] lg:h-[68vh] ${
+                    style={{ aspectRatio: ratio }}
+                    className={`relative mx-auto h-[44vh] max-w-full overflow-hidden rounded-2xl bg-sapin/40 ring-1 ring-white/10 sm:h-[52vh] lg:h-[68vh] ${
                       i % 2 ? 'lg:order-2' : ''
                     }`}
                   >
@@ -126,6 +142,7 @@ export default function AvantApres() {
                       loading="lazy"
                       draggable={false}
                       className="absolute inset-0 h-full w-full object-cover"
+                      style={{ transform: `scale(1.1) translate3d(${(0.5 - volet) * 4}%, 0, 0)` }}
                     />
                     {/* Resultat, revele par le volet */}
                     <img
@@ -134,7 +151,10 @@ export default function AvantApres() {
                       loading="lazy"
                       draggable={false}
                       className="absolute inset-0 h-full w-full object-cover"
-                      style={{ clipPath: `inset(0 0 0 ${100 - pct}%)` }}
+                      style={{
+                        clipPath: `inset(0 0 0 ${100 - pct}%)`,
+                        transform: `scale(1.1) translate3d(${(0.5 - volet) * 4}%, 0, 0)`,
+                      }}
                     />
 
                     <div

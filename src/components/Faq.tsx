@@ -4,6 +4,7 @@ import FadeUp from '@/components/ui/FadeUp';
 import TexteRevele from '@/components/ui/TexteRevele';
 import { T, lien } from '@/lib/i18n';
 import SpotlightBorder from '@/components/ui/SpotlightBorder';
+import { Glisse } from '@/components/scroll/Parallaxe';
 import {
   Accordion,
   AccordionContent,
@@ -77,7 +78,7 @@ export default function Faq() {
   const [active, setActive] = useState<CategoryKey>('budget');
 
   return (
-    <section id="faq" className="relative z-[3] w-full bg-background font-inter py-16 sm:py-24">
+    <section id="faq" className="relative z-[3] w-full overflow-x-clip bg-background font-inter py-16 sm:py-24">
       <div className="mx-auto max-w-[1080px] px-4 sm:px-6">
         <div className="mb-14 flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl">
@@ -105,6 +106,7 @@ export default function Faq() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-8 lg:gap-12 items-stretch">
+          <Glisse depuis="gauche" className="lg:h-full">
           <div className="flex flex-col gap-4 lg:h-full">
             <div className="lg:flex-1">
               <SpotlightBorder
@@ -156,7 +158,9 @@ export default function Faq() {
               </SpotlightBorder>
             </SpotlightBorder>
           </div>
+          </Glisse>
 
+          <Glisse depuis="droite">
           <SpotlightBorder radius="2xl" size={360} className="p-2 sm:p-3">
             <Accordion type="single" collapsible className="flex flex-col gap-3">
               {t.faq.objections[active].map((item, idx) => (
@@ -186,6 +190,7 @@ export default function Faq() {
               ))}
             </Accordion>
           </SpotlightBorder>
+          </Glisse>
         </div>
       </div>
     </section>

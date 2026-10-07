@@ -98,7 +98,7 @@ const FR_A = {
     kicker: 'Quelques jardins récents',
     titre: 'Réalisations',
     intro:
-      'Trois métiers, un même soin du détail. Cliquez sur une famille : les photos s’ouvrent aussitôt.',
+      'Six métiers, un même soin du détail. Cliquez sur une famille : les photos s’ouvrent aussitôt.',
     voirPhotos: 'Voir les {n} photos',
     photos: 'photos',
     famille: 'Famille',
@@ -120,7 +120,25 @@ const FR_A = {
         titre: 'Aménagement\n& création',
         intro: 'Massifs, pelouse, allées',
         resume:
-          'Créer ou réaménager un jardin en tenant compte du terrain, de vos envies et de votre budget : plantations, pelouse en rouleaux, allées et bordures.',
+          'Créer ou réaménager un jardin en tenant compte du terrain, de vos envies et de votre budget : plantations d’arbres, massifs, allées et jardinières.',
+      },
+      pelouse: {
+        titre: 'Pelouse\n& gazon',
+        intro: 'Sol, terre, gazon en rouleaux',
+        resume:
+          'Sol travaillé au motoculteur, apport de terre, nivellement, puis gazon posé en rouleaux : une pelouse dense et rayée dès la fin du chantier.',
+      },
+      potager: {
+        titre: 'Potager',
+        intro: 'Création et entretien',
+        resume:
+          'Préparation de la terre, buttes et planches de culture : un potager prêt pour la saison, puis entretenu au fil de l’année si vous le souhaitez.',
+      },
+      friche: {
+        titre: 'Jardins\noubliés',
+        intro: 'Débroussaillage, remise en état',
+        resume:
+          'Herbes hautes, allées disparues, arbustes envahissants : débroussaillage et remise à plat d’un jardin laissé de côté, souvent après un achat.',
       },
     },
     photosTextes: {
@@ -134,6 +152,27 @@ const FR_A = {
       'massif-palmiers-humilis': { titre: 'Plantation de palmiers nains', alt: 'Palmiers nains plantés dans une pelouse neuve cerclée de paillage minéral' },
       'massif-magnolia-pelouse': { titre: 'Massif engazonné', alt: 'Massif ovale engazonné planté d’un jeune arbre devant une clôture grise' },
       'allee-gravillons-apres': { titre: 'Allée en gravillons', alt: 'Allée en gravillons blancs le long d’une maison contemporaine grise' },
+      'olivier-taille-echelle': { titre: 'Taille d’un olivier', alt: 'Clément taille un olivier depuis une échelle devant une maison' },
+      'olivier-forme': { titre: 'Olivier en taille de formation', alt: 'Jeune olivier à la couronne arrondie après sa taille de formation' },
+      'bordures-taille-haie': { titre: 'Bordures au taille-haie', alt: 'Taille au taille-haie d’une bordure le long d’une allée en pierre' },
+      'allee-bordures-taillees': { titre: 'Allée et bordures taillées', alt: 'Allée en pierre courbe bordée de haies basses fraîchement taillées' },
+      'catalpa-plantation': { titre: 'Plantation d’un catalpa', alt: 'Plantation d’un catalpa boule sur une pelouse, bâches et outils au sol' },
+      'catalpa-plante': { titre: 'Catalpa planté et paillé', alt: 'Tronc d’un catalpa tuteuré au centre d’un cercle de paillis sur la pelouse' },
+      'jardiniere-preparee': { titre: 'Jardinière préparée', alt: 'Longue jardinière de façade remplie de terre neuve, prête à planter' },
+      'jardiniere-pittosporums': { titre: 'Pittosporums en jardinière', alt: 'Arrosage de pittosporums fraîchement plantés dans une jardinière de façade' },
+      'pelouse-rouleaux-terrasse': { titre: 'Gazon en rouleaux', alt: 'Bandes de gazon en rouleaux posées devant une terrasse à arcades' },
+      'pelouse-motoculteur': { titre: 'Sol au motoculteur', alt: 'Préparation du sol au motoculteur le long d’un mur blanc' },
+      'pelouse-apport-terre': { titre: 'Apport de terre', alt: 'Benne de terre végétale déchargée pour préparer la pelouse' },
+      'gazon-rouleaux-apres': { titre: 'Pose en cours', alt: 'Moitié du terrain couverte de gazon en rouleaux rayé, l’autre en terre nivelée' },
+      'pelouse-finie': { titre: 'Pelouse terminée', alt: 'Pelouse dense et uniforme bordée d’un mur blanc et d’arbres' },
+      'potager-planche': { titre: 'Planche de potager', alt: 'Potager en terre fraîchement travaillée, une planche posée au milieu' },
+      'potager-preparation': { titre: 'Préparation du potager', alt: 'Clément prépare la terre d’un potager au fond d’un jardin' },
+      'potager-buttes': { titre: 'Buttes de culture', alt: 'Buttes de culture en terre retournée dans un grand potager' },
+      'friche-allee-degagee': { titre: 'Allée retrouvée', alt: 'Allée en béton dégagée au milieu d’un jardin débroussaillé' },
+      'friche-avant': { titre: 'Le point de départ', alt: 'Jardin envahi par les herbes hautes devant un abri de jardin' },
+      'friche-allee-buis': { titre: 'Jardin rouvert', alt: 'Allée dégagée menant à la maison, arbustes taillés en boule' },
+      'jardin-oublie-apres': { titre: 'Terrain fauché', alt: 'Terrain débroussaillé à la débroussailleuse entre des maisons' },
+      'friche-terrain-fauche': { titre: 'Terrain remis à plat', alt: 'Grand terrain fauché et nettoyé sous un ciel nuageux' },
     },
   },
 
@@ -169,12 +208,52 @@ const FR_A = {
     ],
   },
 
+  apresVente: {
+    kicker: 'Achat, vente : le jardin compte aussi',
+    titre: 'Le jardin qui va',
+    titreAccent: 'avec la maison.',
+    intro:
+      'Une maison qui change de mains, c’est souvent un jardin laissé de côté pendant des mois. C’est le moment où un passage fait le plus de différence.',
+    // Propos d'un client, rapportés par Clément dans la légende de sa vidéo.
+    citation: '« Je pensais pas que mon jardin était si grand »',
+    citationSource: 'Un nouveau propriétaire, après le débroussaillage',
+    etapes: [
+      {
+        num: '01',
+        titre: 'Vous venez d’acheter',
+        texte:
+          'Herbes hautes, haies débordantes, allées disparues : je remets le jardin à plat pour que vous découvriez enfin ce que vous avez acheté. Un contrat d’entretien peut ensuite prendre le relais.',
+        cta: 'Remettre mon jardin en état',
+        sujet: 'Jardin à remettre en état après un achat',
+        corps: 'Bonjour Clément, nous venons d’acheter une maison dont le jardin est à reprendre.\n\nCommune : \nSurface approximative : \n',
+      },
+      {
+        num: '02',
+        titre: 'Vous vendez',
+        texte:
+          'Un jardin net se photographie mieux et se visite mieux. Tonte, taille, désherbage et massifs repris avant les photos de l’annonce et les premières visites.',
+        cta: 'Préparer le jardin avant la vente',
+        sujet: 'Préparer le jardin avant une vente',
+        corps: 'Bonjour Clément, je mets ma maison en vente et j’aimerais rendre le jardin présentable.\n\nDate des premières visites : \nCommune : \n',
+      },
+      {
+        num: '03',
+        titre: 'Agences et notaires',
+        texte:
+          'Un bien à valoriser, un jardin à remettre en état entre deux propriétaires : un seul interlocuteur, à Brunoy et dans les villes voisines.',
+        cta: 'Proposer un partenariat',
+        sujet: 'Partenariat — agence immobilière',
+        corps: 'Bonjour Clément, je travaille pour une agence immobilière et j’aimerais vous proposer une collaboration.\n\n',
+      },
+    ],
+  },
+
   avantApres: {
     kicker: 'Le même endroit, avant et après',
     titre: 'Ce qu’il y avait',
     titreAccent: 'à la place.',
     intro:
-      'Deux jardins dont j’ai gardé la photo de départ. Chaque carte se pose au centre de l’écran, puis l’état d’origine s’efface au profit du résultat.',
+      'Cinq jardins dont j’ai gardé l’état de départ, souvent filmé depuis le même pied d’appareil. Chaque carte se pose au centre de l’écran, puis l’état d’origine s’efface au profit du résultat.',
     avant: 'Avant',
     apres: 'Après',
     cta: 'Montrez-moi votre « avant »',
@@ -194,6 +273,27 @@ const FR_A = {
         detail:
           'Un faux jasmin qui débordait sur le passage. Taille de l’arche pour lui rendre sa forme et dégager l’allée en briques.',
         repere: 'Même arche, même allée en briques, même escalier au fond.',
+      },
+      {
+        titre: 'Le jardin oublié',
+        lieu: 'Terrain envahi',
+        detail:
+          'Des herbes jusqu’aux genoux sur tout le terrain. Débroussaillage complet : en une séance, le sol réapparaît et le jardin retrouve ses limites.',
+        repere: 'Filmé depuis le même pied d’appareil : mêmes maisons, même haie à droite.',
+      },
+      {
+        titre: 'Gazon en rouleaux',
+        lieu: 'Pelouse neuve',
+        detail:
+          'Une terre préparée et nivelée, puis le gazon posé bande par bande. L’image « après » est prise pendant la pose : la moitié du terrain est déjà verte.',
+        repere: 'Filmé depuis le même pied d’appareil : même pool house, même mur blanc.',
+      },
+      {
+        titre: 'Massif de façade',
+        lieu: 'Devant la maison',
+        detail:
+          'Un massif fatigué au pied de la façade : arrachage, désherbage, puis replantation. Les deux photos sont celles du client, prises du même endroit.',
+        repere: 'Même fenêtre cintrée, même arbre, même dallage au premier plan.',
       },
     ],
   },

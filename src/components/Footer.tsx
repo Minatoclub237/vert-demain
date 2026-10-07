@@ -3,7 +3,7 @@ import TexteRevele from '@/components/ui/TexteRevele';
 import { T, lien, PAGE_LEGALE } from '@/lib/i18n';
 
 // Seules les ancres restent ici ; les libellés viennent du dictionnaire.
-const PRESTATIONS = ['#realisations-entretien', '#realisations-taille', '#realisations-creation', '#contrat'];
+const PRESTATIONS = ['#realisations-entretien', '#realisations-taille', '#realisations-creation', '#realisations-pelouse', '#realisations-potager', '#realisations-friche', '#contrat'];
 const ENTREPRISE = ['#realisations', '#solutions', '#secteurs', '#faq'];
 
 // Comptes vérifiés le 06/10/2026 (liens présents sur clement-vertdemain.com).
